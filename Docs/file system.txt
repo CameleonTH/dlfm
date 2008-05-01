@@ -1,0 +1,12 @@
+file extension :dlf
+
+data
+header
+	URL length
+	URL
+	Filename length
+	Filename
+	FileSize : 8octets
+	DataDownloaded : 8octets
+header length : 4octets
+Singaure : DLFMF : 5octets
