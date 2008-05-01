@@ -1,5 +1,4 @@
 #include "MainWindow.h"
-#include "LogWindow.h"
 #include "DialogNewDL.h"
 //#include "wx/generic/dirctrlg.h"
 #include "../lib/wxvcl/inifiles.h"
@@ -21,9 +20,9 @@ MainWindow::MainWindow(wxFrame *frame, const wxString& title, int x, int y, int 
 	//this->SetBackgroundColor(wxColor(0,0,0));
 	// Création de la fenetre de log
 
-	LogWindow *LogWin = new LogWindow(this,wxString("Log Window"),10,10,300,200);
+	LogWin = new LogWindow(this,wxString("Log Window"),10,10,300,200);
 //#ifdef DEBUG
-	LogWin->Show();
+	//LogWin->Show();
 //#endif
 
 	SetSize(640,480);
@@ -152,11 +151,12 @@ MainWindow::MainWindow(wxFrame *frame, const wxString& title, int x, int y, int 
 		//wxLogWarning("%d",result);
 		wxPanel *finalPanel = new wxPanel(book);
 		
-			result = book->AddPage(finalPanel,wxString("Test"));
+			//result = book->AddPage(finalPanel,wxString("Test"));
 			//wxLogWarning("%d",result);
 
-			mGauge = new wxVistagauge(finalPanel,wxID_ANY,100,wxDefaultPosition,wxSize(250,18));
-			mGauge->SetValue(300);
+			//mGauge = new wxVistagauge(finalPanel,wxID_ANY,100,wxDefaultPosition,wxSize(250,18));
+			//mGauge->SetValue(300);
+			mGauge=NULL;
 	}
 
 
@@ -277,9 +277,12 @@ void MainWindow::OnTimer(wxTimerEvent &event)
 {
 	mDLManager->UpdateScreen();
 
-	mGauge->SetValue(mGauge->GetValue()+1);
-	if (mGauge->GetValue()>mGauge->GetRange())
-		mGauge->SetValue(0);
+	if (mGauge)
+	{
+		mGauge->SetValue(mGauge->GetValue()+1);
+		if (mGauge->GetValue()>mGauge->GetRange())
+			mGauge->SetValue(0);
+	}
 
 	mGauge->Refresh();
 }
