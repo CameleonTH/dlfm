@@ -10,6 +10,7 @@ OK	Suppression d'un téléchargement
 	Gestion des ftp
 	Amélioration interface
 	Gestion plusieurs langues
+	Gestion des reprise automatique en cas d'erreurs
 
 0.4
 	Gestion de dossiers (En cours, finie, corbeille)
