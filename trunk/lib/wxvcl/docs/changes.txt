@@ -1,0 +1,6 @@
+version 0.0.2 - Jan 03, 2008
+* Bug fixes for GCC compilers
+
+version 0.0.1 - Nov 19, 2007
+* Contains more than 500 VCL functions
+* Contains aprox. 8 basic VCL classes (Delphi Set Implementation, TStringList, Common Dialogs, IniFiles)
