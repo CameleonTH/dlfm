@@ -1,0 +1,23 @@
+0.2
+OK	Sauvegardes de la liste des fichiers
+OK	Suppression d'un téléchargement
+	Etat d'un téléchargement dans un onglet
+	Blocks d'avancement
+
+0.3
+	Otions
+	Mise dans la barre des taches
+	Gestion des ftp
+	Amélioration interface
+	Gestion plusieurs langues
+
+0.4
+	Gestion de dossiers (En cours, finie, corbeille)
+	Gestion des erreurs
+	About
+	Menus
+	Séléction multiple
+	Status Bar
+	Gestionnaire de vitesse
+	Schedule
+	Graphique de vitesse

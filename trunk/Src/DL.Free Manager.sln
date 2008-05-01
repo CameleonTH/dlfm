@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DL.Free Manager", "DL.Free Manager.vcproj", "{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DLL Debug|Win32 = DLL Debug|Win32
+		DLL Release|Win32 = DLL Release|Win32
+		DLL Unicode Debug|Win32 = DLL Unicode Debug|Win32
+		DLL Unicode Release|Win32 = DLL Unicode Release|Win32
+		DLL Universal Debug|Win32 = DLL Universal Debug|Win32
+		DLL Universal Release|Win32 = DLL Universal Release|Win32
+		DLL Universal Unicode Debug|Win32 = DLL Universal Unicode Debug|Win32
+		DLL Universal Unicode Release|Win32 = DLL Universal Unicode Release|Win32
+		Release DLL|Win32 = Release DLL|Win32
+		Release|Win32 = Release|Win32
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Release|Win32 = Unicode Release|Win32
+		Universal Debug|Win32 = Universal Debug|Win32
+		Universal Release|Win32 = Universal Release|Win32
+		Universal Unicode Debug|Win32 = Universal Unicode Debug|Win32
+		Universal Unicode Release|Win32 = Universal Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Release|Win32.ActiveCfg = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Release|Win32.Build.0 = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Unicode Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Release|Win32.ActiveCfg = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Release|Win32.Build.0 = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Unicode Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.DLL Universal Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Release DLL|Win32.ActiveCfg = Release DLL|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Release DLL|Win32.Build.0 = Release DLL|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Release|Win32.ActiveCfg = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Release|Win32.Build.0 = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Unicode Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Release|Win32.ActiveCfg = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Release|Win32.Build.0 = Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Unicode Debug|Win32.Build.0 = Debug|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{11BCC117-7C0D-4658-9AC0-5F62DE3A3803}.Universal Unicode Release|Win32.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
