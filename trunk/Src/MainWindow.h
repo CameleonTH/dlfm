@@ -8,6 +8,7 @@
 
 #include "DLManager.h"
 #include "Parser.h"
+#include "LogWindow.h"
 
 //#include "wx/aui/aui.h"
 
@@ -45,6 +46,8 @@ public:
 	};
 private:
 	DECLARE_EVENT_TABLE()
+
+	LogWindow		*LogWin;
 
 	wxPanel			*mPanel;
 	wxTreeCtrlBase	*mGroup;
