@@ -22,7 +22,7 @@ MainWindow::MainWindow(wxFrame *frame, const wxString& title, int x, int y, int 
 
 	LogWin = new LogWindow(this,wxString("Log Window"),10,10,300,200);
 //#ifdef DEBUG
-	//LogWin->Show();
+	LogWin->Show();
 //#endif
 
 	SetSize(640,480);
