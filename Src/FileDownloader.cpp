@@ -238,6 +238,15 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 			// On récupére la taille du fichier finale
 			long size = Parser::GetFileSizeHTTP(pFFD->pHeader);
 
+			/*double size2;
+			double size3;
+			curl_easy_getinfo(pFFD->pCurl, CURLINFO_SIZE_DOWNLOAD, &size2);
+			curl_easy_getinfo(pFFD->pCurl, CURLINFO_REQUEST_SIZE, &size2);
+			curl_easy_getinfo(pFFD->pCurl, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &size3);			
+
+			wxLogMessage("Size: %d Size2: %f",size,size2+size3);*/
+			//CURLINFO_REQUEST_SIZE
+
 			if (pFFD->iDataPos>0)
 				if (size!=pFFD->iFileSize)
 				{
@@ -277,6 +286,9 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 					pFFD->fMoySpeed=pFFD->fSpeed;
 				else
 					pFFD->fMoySpeed=(pFFD->fMoySpeed+pFFD->fSpeed)/2;
+
+				//curl_easy_getinfo(pFFD->pCurl, CURLINFO_SPEED_DOWNLOAD, &(pFFD->fMoySpeed));
+				
 				pFFD->iTime=GetTickCount();
 				pFFD->iByteDL=0;
 			}
