@@ -7,19 +7,28 @@
 #include "MainWindow.h"
 #include "FilePage.h"
 
-DLManager::DLManager()
+DLManager::DLManager(Config *config)
 {
 	wxLogMessage("Download Manager Initialisation");
 
+	mConfig = config;
+	//mConfig=NULL;
 	curl_global_init(CURL_GLOBAL_ALL);
 
 	List.Clear();
 
 	LoadDownloads();
 
-	//FreeFileDownloader *download = new FreeFileDownloader("http://dl.free.fr/getfile.pl?file=/mceva576/Final.rar");
+	if (mConfig)
+	if (mConfig->ReadIntValue("StartDownload",0))
+	{
+		for (int i=0;i<List.Count();i++)
+		{
+			List[i]->StartDownload();
+		}
+	}
+	UpdateScreen(true);
 
-	//download->StartDownload();
 	Time = GetTickCount();
 }
 
@@ -103,12 +112,12 @@ void DLManager::UpdateScreen(bool force)
 		wxLogDebug("Id : %d",selected);
 		mMain->GetListCtrl()->DeleteAllItems();
 
-		wxLogMessage("Count %d %d",mMain->GetNotebook()->GetPageCount(),List.Count());
+		wxLogDebug("Count %d %d",mMain->GetNotebook()->GetPageCount(),List.Count());
 		bool Deleted=false;
 		if (mMain->GetNotebook()->GetPageCount()!=List.Count()+1)
 		{
 			Deleted=true;
-			wxLogMessage("Delete pages");
+			wxLogDebug("Delete pages");
 			for (;1<mMain->GetNotebook()->GetPageCount();)
 				mMain->GetNotebook()->DeletePage(1);
 		}
@@ -181,13 +190,21 @@ void DLManager::UpdateScreen(bool force)
 
 				if (Deleted)
 				{
-					mMain->GetNotebook()->InsertPage(1,new wxPanel(),tmp->GetFilename());
+					mMain->GetNotebook()->InsertPage(1,new FilePage(mMain->GetNotebook()),tmp->GetFilename());
 				}else{
-					for (int i=1;i<mMain->GetNotebook()->GetPageCount();i++)
+					for (int j=1;j<mMain->GetNotebook()->GetPageCount();j++)
 					{
-						if (mMain->GetNotebook()->GetPageText(i) == tmp->GetFilename())
+						if (mMain->GetNotebook()->GetPageText(j) == tmp->GetFilename())
 						{
-							mMain->GetNotebook()->GetPage(i);
+							FilePage *page = (FilePage*)mMain->GetNotebook()->GetPage(j);
+
+							page->SetGaugeValue((float)tmp->GetDownloadedSize()/tmp->GetFileSize()*100);
+							page->SetFileSize(tmp->GetFileSize());
+							page->SetDownloadedSize(tmp->GetDownloadedSize());
+
+							if (mConfig)
+								page->SetBlockSize(mConfig->ReadIntValue("BlockSize",2048));
+							
 							break;
 						}
 					}

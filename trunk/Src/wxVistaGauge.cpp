@@ -1,10 +1,10 @@
-#include "wxVistagauge.h"
+#include "wxVistaGauge.h"
 
-BEGIN_EVENT_TABLE(wxVistagauge, wxGauge)
-	EVT_PAINT(wxVistagauge::OnPaint)
+BEGIN_EVENT_TABLE(wxVistaGauge, wxGauge)
+	EVT_PAINT(wxVistaGauge::OnPaint)
 END_EVENT_TABLE()
 
-wxVistagauge::wxVistagauge(wxWindow *parent,
+wxVistaGauge::wxVistaGauge(wxWindow *parent,
               wxWindowID id,
               int range,
               const wxPoint& pos ,
@@ -17,20 +17,21 @@ wxVistagauge::wxVistagauge(wxWindow *parent,
 	
 }
 
-void wxVistagauge::OnPaint(wxPaintEvent &event)
+void wxVistaGauge::OnPaint(wxPaintEvent &event)
 {
 	//wxGauge::OnPaint(event);
 
-	wxBitmap begin("IDB_WXVISTAGAUGE_BEGIN");
-	wxBitmap middle("IDB_WXVISTAGAUGE_MIDDLE");
-	wxBitmap end("IDB_WXVISTAGAUGE_END");
+	wxBitmap begin("IDB_wxVistaGauge_BEGIN");
+	wxBitmap middle("IDB_wxVistaGauge_MIDDLE");
+	wxBitmap end("IDB_wxVistaGauge_END");
 
-	wxBitmap blockbegin("IDB_WXVISTAGAUGE_BLOCKBEGIN");
-	wxBitmap blockmiddle("IDB_WXVISTAGAUGE_BLOCKMIDDLE");
-	wxBitmap blockend("IDB_WXVISTAGAUGE_BLOCKEND");
+	wxBitmap blockbegin("IDB_wxVistaGauge_BLOCKBEGIN");
+	wxBitmap blockmiddle("IDB_wxVistaGauge_BLOCKMIDDLE");
+	wxBitmap blockend("IDB_wxVistaGauge_BLOCKEND");
 
 	int w,h;
 	GetSize(&w,&h);
+	w=w-5;
 
 	int maxw=(w-2)*(GetValue()/(float)GetRange());
 
@@ -59,7 +60,7 @@ void wxVistagauge::OnPaint(wxPaintEvent &event)
 	}
 
 	wxString text("");
-	text.Printf("%.0f %c",(float)GetValue()/GetRange()*100,'%');
+	text.Printf("%.2f %c",(float)GetValue()/GetRange()*100,'%');
 	wxFont font = vDc.GetFont();
 	font.SetPointSize(8);
 	font.SetWeight(wxFONTWEIGHT_BOLD);

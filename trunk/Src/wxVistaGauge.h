@@ -1,11 +1,13 @@
 #include "wx/wx.h"
 #include "wx/gauge.h"
 
+#ifndef _VISTAGAUGE_
+#define _VISTAGAUGE_
 
-class wxVistagauge : public wxGauge
+class wxVistaGauge : public wxGauge
 {
 public:
-	wxVistagauge(wxWindow *parent,
+	wxVistaGauge(wxWindow *parent,
               wxWindowID id,
               int range,
               const wxPoint& pos = wxDefaultPosition,
@@ -18,3 +20,5 @@ public:
 
 	DECLARE_EVENT_TABLE()
 };
+
+#endif

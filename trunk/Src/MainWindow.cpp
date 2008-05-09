@@ -12,8 +12,8 @@ BEGIN_EVENT_TABLE(MainWindow, wxFrame)
 	 EVT_TIMER(wxID_ANY,MainWindow::OnTimer)
 END_EVENT_TABLE()
 
-MainWindow::MainWindow(wxFrame *frame, const wxString& title, int x, int y, int w, int h)
- : wxFrame(frame, wxID_ANY, title, wxPoint(x, y), wxSize(w, h))
+MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, int x, int y, int w, int h*/)
+ : wxFrame(frame, wxID_ANY, wxString("DL.Free Manager 0.2 Alpha By CameleonTH"), wxPoint(10, 10), wxSize(640,480))
 {
 	wxColour col = wxColour(117,174,255);
 	//SetBackgroundColour(col);
@@ -25,7 +25,11 @@ MainWindow::MainWindow(wxFrame *frame, const wxString& title, int x, int y, int 
 	LogWin->Show();
 //#endif
 
-	SetSize(640,480);
+	SetSize(config->ReadIntValue("Width",640),config->ReadIntValue("Height",480));
+
+	if (config->ReadIntValue("FullScreen",1))
+		Maximize();
+
 	//mPanel = new wxPanel(this);
 
 	mSplitter = new wxSplitterWindow(this);
@@ -160,7 +164,7 @@ MainWindow::MainWindow(wxFrame *frame, const wxString& title, int x, int y, int 
 	}
 
 
-	mSplitter->SplitVertically(mGroup,book,150);
+	mSplitter->SplitVertically(mGroup,book,1/*50*/);
 
 	CreateStatusBar();
 
@@ -182,6 +186,13 @@ void MainWindow::AttachDLManager(DLManager *manager)
 	mDLManager->UpdateScreen(true);
 }
 
+void MainWindow::ShowLog(bool show)
+{
+	if (show)
+		LogWin->Show();
+	else
+		LogWin->Hide();
+}
 
 void MainWindow::AddDownload()
 {

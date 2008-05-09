@@ -1,10 +1,13 @@
 0.2
 OK	Sauvegardes de la liste des fichiers
 OK	Suppression d'un téléchargement
-	Etat d'un téléchargement dans un onglet
-	Blocks d'avancement
+OK	Blocks d'avancement
+
+0.2.5
+	Gestion des erreurs
 
 0.3
+	EnCours	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d'avancement,...)
 	Otions
 	Mise dans la barre des taches
 	Gestion des ftp
@@ -14,7 +17,6 @@ OK	Suppression d'un téléchargement
 
 0.4
 	Gestion de dossiers (En cours, finie, corbeille)
-	Gestion des erreurs
 	About
 	Menus
 	Séléction multiple

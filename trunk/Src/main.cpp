@@ -10,6 +10,7 @@
 #include "FreeFileDownloader.h"
 #include "FileDownloader.h"
 #include "Parser.h"
+#include "Config.h"
 
 class MyApp : public wxApp
 {
@@ -35,11 +36,13 @@ bool MyApp::OnInit()
 {
 	wxImage::AddHandler(new wxPNGHandler);
 
-	MainWindow *main = new MainWindow(NULL,wxString("DL.Free Manager 0.2 Alpha By CameleonTH"),10,10,640,480);
+	Config *config = new Config("config.cfg");
+	config->Load();
+	MainWindow *main = new MainWindow(NULL,config);
 	
 	SetTopWindow(main);
 
-	DLManager *manager = new DLManager();
+	DLManager *manager = new DLManager(config);
 
 	if (manager)
 	{
