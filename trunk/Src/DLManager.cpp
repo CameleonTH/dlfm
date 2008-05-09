@@ -183,7 +183,7 @@ void DLManager::UpdateScreen(bool force)
 
 				mMain->GetListCtrl()->SetItem(item,6,tmp->GetLink());
 
-				mMain->GetListCtrl()->SetItemBackgroundColour(item,grey==true ? wxColor(192,192,192) : wxColor(255,255,255));
+				mMain->GetListCtrl()->SetItemBackgroundColour(item,grey==true ? wxColor(224,224,224) : wxColor(255,255,255));
 
 				if (List.Count()-i-1==selected)
 					mMain->GetListCtrl()->SetItemState(item,wxLIST_STATE_SELECTED,wxLIST_STATE_SELECTED);
