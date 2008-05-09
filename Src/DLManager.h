@@ -1,4 +1,5 @@
 #include "wx/wx.h"
+#include "Config.h"
 
 #ifndef _DLMANAGER_
 #define _DLMANAGER_
@@ -11,7 +12,7 @@ WX_DEFINE_ARRAY_PTR(FileDownloader*, wxArrayFileDownloader);
 class DLManager
 {
 public:
-	DLManager();
+	DLManager(Config *config);
 	~DLManager();
 
 	bool AddDownload(wxString link,wxString filename);
@@ -29,6 +30,7 @@ public:
 
 	MainWindow *mMain;
 
+	Config *mConfig;
 	long Time;
 	enum
 	{

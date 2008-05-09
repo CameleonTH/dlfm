@@ -9,6 +9,7 @@
 #include "DLManager.h"
 #include "Parser.h"
 #include "LogWindow.h"
+#include "Config.h"
 
 //#include "wx/aui/aui.h"
 
@@ -17,7 +18,7 @@
 class MainWindow : public wxFrame
 {
 public:
-	MainWindow(wxFrame *frame, const wxString& title, int x, int y, int w, int h);
+	MainWindow(wxFrame *frame, Config *config/*, const wxString& title, int x, int y, int w, int h*/);
 	~MainWindow();
 
 	void AttachDLManager(DLManager *manager);
@@ -34,6 +35,8 @@ public:
 	void OnIdle(wxIdleEvent &event);
 	void OnTimer(wxTimerEvent &event);
 	void OnClose(wxCloseEvent &event);
+
+	void ShowLog(bool show=true);
 
 	enum
 	{
@@ -63,7 +66,7 @@ private:
 
 	DLManager		*mDLManager;
 
-	wxVistagauge	*mGauge;
+	wxVistaGauge	*mGauge;
 
 	long time;
 

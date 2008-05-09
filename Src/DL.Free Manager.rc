@@ -92,16 +92,18 @@ END
 // Bitmap
 //
 
-IDB_ADD							BITMAP					"bitmap/Add.bmp"
-IDB_START						BITMAP					"bitmap/Start.bmp"
-IDB_STOP						BITMAP					"bitmap/Stop.bmp"
-IDB_DELETE						BITMAP					"bitmap/Delete.bmp"
-IDB_WXVISTAGAUGE_BEGIN			BITMAP					"bitmap/wxVistaGauge/begin.bmp"
-IDB_WXVISTAGAUGE_MIDDLE			BITMAP					"bitmap/wxVistaGauge/middle.bmp"
-IDB_WXVISTAGAUGE_END			BITMAP					"bitmap/wxVistaGauge/end.bmp"
-IDB_WXVISTAGAUGE_BLOCKBEGIN		BITMAP					"bitmap/wxVistaGauge/begin block.bmp"
-IDB_WXVISTAGAUGE_BLOCKMIDDLE	BITMAP					"bitmap/wxVistaGauge/middle block.bmp"
-IDB_WXVISTAGAUGE_BLOCKEND		BITMAP					"bitmap/wxVistaGauge/end block.bmp"
+IDB_ADD                 BITMAP                  "bitmap/Add.bmp"
+IDB_START               BITMAP                  "bitmap/Start.bmp"
+IDB_STOP                BITMAP                  "bitmap/Stop.bmp"
+IDB_DELETE              BITMAP                  "bitmap/Delete.bmp"
+IDB_WXVISTAGAUGE_BEGIN  BITMAP                  "bitmap/wxVistaGauge/begin.bmp"
+IDB_WXVISTAGAUGE_MIDDLE BITMAP                  "bitmap/wxVistaGauge/middle.bmp"
+IDB_WXVISTAGAUGE_END    BITMAP                  "bitmap/wxVistaGauge/end.bmp"
+IDB_WXVISTAGAUGE_BLOCKBEGIN BITMAP              "bitmap/wxVistaGauge/begin block.bmp"
+IDB_WXVISTAGAUGE_BLOCKMIDDLE BITMAP             "bitmap/wxVistaGauge/middle block.bmp"
+IDB_WXVISTAGAUGE_BLOCKEND BITMAP                "bitmap/wxVistaGauge/end block.bmp"
+IDB_BLOCK_BLUE          BITMAP                  "bitmap/block.bmp"
+IDB_BLOCK_GREY          BITMAP                  "bitmap/blockgrey.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -110,7 +112,7 @@ IDB_WXVISTAGAUGE_BLOCKEND		BITMAP					"bitmap/wxVistaGauge/end block.bmp"
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON						ICON					"bitmap/icon.ico"
+IDI_ICON                ICON                    "bitmap/icon.ico"
 #endif    // Français (France) resources
 /////////////////////////////////////////////////////////////////////////////
 
