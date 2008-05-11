@@ -6,6 +6,7 @@
 
 BEGIN_EVENT_TABLE(MainWindow, wxFrame)
 	EVT_CLOSE(MainWindow::OnClose)
+	EVT_ICONIZE(MainWindow::OnIconize)
 	EVT_TOOL(wxID_ANY, MainWindow::OnLeftClick)
 	//EVT_IDLE(MainWindow::OnIdle)
 	//EVT_TIMER(wxID_ANY,MainWindow::OnTimer)
@@ -27,7 +28,7 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 
 	SetSize(config->ReadIntValue("Width",640),config->ReadIntValue("Height",480));
 
-	if (config->ReadIntValue("FullScreen",1))
+	if (config->ReadIntValue("FullScreen",0))
 		Maximize();
 
 	//mPanel = new wxPanel(this);
@@ -311,4 +312,9 @@ void MainWindow::OnClose(wxCloseEvent &event)
 	mDLManager->SaveDownloads();
 
 	exit(0);
+}
+
+void MainWindow::OnIconize(wxIconizeEvent &event)
+{                                                                                                      
+	Show(false);                                                                                            
 }

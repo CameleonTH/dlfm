@@ -12,6 +12,7 @@ public:
 	void SetFileSize(long size);
 	void SetDownloadedSize(long size);
 	void SetBlockSize(int size);
+	void Refresh();
 
 private:
 	wxVistaGauge *mGauge;

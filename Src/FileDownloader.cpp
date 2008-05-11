@@ -296,6 +296,8 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 
 		pFFD->iDataPos+=len;
 
+		//pFFD->Manager->UpdateBlocks(pFFD);
+
 		if (pFFD->iDataPos==pFFD->iFileSize)
 			pFFD->Status=FFD_FINISH;
 
@@ -308,5 +310,4 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 		break;	
 	}
 	return size*nmemb;
-
 }

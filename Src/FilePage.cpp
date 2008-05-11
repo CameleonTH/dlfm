@@ -7,7 +7,7 @@ FilePage::FilePage(wxWindow *parent)
 	wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
 	SetSizer(mainSizer);
 
-	mGauge = new wxVistaGauge(this,wxID_ANY,100);
+	mGauge = new wxVistaGauge(this,wxID_ANY,10000);
 	//mGauge->SetMaxSize(wxSize(250,18));
 	mBlocks = new ProgressBlocks(this,wxID_ANY);
 
@@ -19,7 +19,7 @@ void FilePage::SetGaugeValue(float value)
 {
 	if (mGauge)
 	{
-		mGauge->SetValue(value);
+		mGauge->SetValue(value*100);
 	}
 }
 
@@ -41,4 +41,12 @@ void FilePage::SetBlockSize(int size)
 {
 	if (mBlocks)
 		mBlocks->SetBlockSize(size);
+}
+
+void FilePage::Refresh()
+{
+	//wxLogMessage("Refresh");
+
+	mBlocks->Refresh();
+	mGauge->Refresh();
 }

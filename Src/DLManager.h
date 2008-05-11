@@ -18,6 +18,7 @@ public:
 	bool AddDownload(wxString link,wxString filename);
 
 	void UpdateScreen(bool force=false);
+	void UpdateBlocks(FileDownloader *file);
 
 	void StartDownload(wxString link);
 	void StopDownload(wxString link);

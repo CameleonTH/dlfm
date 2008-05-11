@@ -12,90 +12,92 @@ void Config::Load()
 	Values.Clear();
 
 	FILE *file=fopen(mFilename,"r");
-
-	wxString Name;
-	wxString Value;
-
-	int State = STATE_NONE;
-	char preccar=' ';
-	char car=fgetc(file);
 	if (file)
 	{
-		while (!feof(file))
+		wxString Name;
+		wxString Value;
+
+		int State = STATE_NONE;
+		char preccar=' ';
+		char car=fgetc(file);
+		if (file)
 		{
-			switch (State)
+			while (!feof(file))
 			{
-			case STATE_NONE:
-				if (car=='#')
-					State=STATE_COM;
-				else if (car!='\t' || car!='\n' || car!='\r')
+				switch (State)
 				{
-					State=STATE_PRENAME;
+				case STATE_NONE:
+					if (car=='#')
+						State=STATE_COM;
+					else if (car!='\t' || car!='\n' || car!='\r')
+					{
+						State=STATE_PRENAME;
+					}
+					break;
+				case STATE_COM:
+					if (car=='\n' || car=='\r')
+						State=STATE_NONE;
+					break;
+				case STATE_PRENAME:
+					if (car=='\t' || car=='\n' || car=='\r')
+					{
+						State=STATE_NONE;
+					}else if (car!=' ')
+					{
+						State=STATE_NAME;
+						Name="";
+						Name+=preccar;
+						Name+=car;
+					}
+					break;
+				case STATE_NAME:
+					if (car==' ' || car=='=')
+					{
+						State=STATE_PREVALUE;
+					}else if (car=='\t' || car=='\n' || car=='\r')
+					{
+						State=STATE_NONE;
+					}else
+						Name+=car;
+					break;
+				case STATE_PREVALUE:
+					if (car=='\t' || car=='\n' || car=='\r')
+					{
+						State=STATE_NONE;
+					}else if (car!=' ')
+					{
+						State=STATE_VALUE;
+						Value="";
+						Value+=car;
+					}
+					break;
+				case STATE_VALUE:
+					if (car=='\t' || car=='\n' || car=='\r' || car==' ' || car=='=')
+					{
+						//wxLogMessage("Name : %s, Value : %s",Name,Value);
+						ValueSlot *slot = new ValueSlot();
+						slot->Name = Name;
+						slot->Value = Value;
+						Values.Add(slot);
+						State=STATE_NONE;
+					}else
+						Value+=car;
+					break;
 				}
-				break;
-			case STATE_COM:
-				if (car=='\n' || car=='\r')
-					State=STATE_NONE;
-				break;
-			case STATE_PRENAME:
-				if (car=='\t' || car=='\n' || car=='\r')
-				{
-					State=STATE_NONE;
-				}else if (car!=' ')
-				{
-					State=STATE_NAME;
-					Name="";
-					Name+=preccar;
-					Name+=car;
-				}
-				break;
-			case STATE_NAME:
-				if (car==' ' || car=='=')
-				{
-					State=STATE_PREVALUE;
-				}else if (car=='\t' || car=='\n' || car=='\r')
-				{
-					State=STATE_NONE;
-				}else
-					Name+=car;
-				break;
-			case STATE_PREVALUE:
-				if (car=='\t' || car=='\n' || car=='\r')
-				{
-					State=STATE_NONE;
-				}else if (car!=' ')
-				{
-					State=STATE_VALUE;
-					Value="";
-					Value+=car;
-				}
-				break;
-			case STATE_VALUE:
-				if (car=='\t' || car=='\n' || car=='\r' || car==' ' || car=='=')
-				{
-					//wxLogMessage("Name : %s, Value : %s",Name,Value);
-					ValueSlot *slot = new ValueSlot();
-					slot->Name = Name;
-					slot->Value = Value;
-					Values.Add(slot);
-					State=STATE_NONE;
-				}else
-					Value+=car;
-				break;
+				preccar=car;
+				car = fgetc(file);
 			}
-			preccar=car;
-			car = fgetc(file);
-		}
 
-		fclose(file);
+			fclose(file);
 
-		if (State==STATE_VALUE)
-		{
-			//wxLogMessage("Name : '%s', Value : '%s'",Name,Value);
-			ValueSlot *slot = new ValueSlot();
-			slot->Name = Name;
-			slot->Value = Value;
-			Values.Add(slot);
+			if (State==STATE_VALUE)
+			{
+				//wxLogMessage("Name : '%s', Value : '%s'",Name,Value);
+				ValueSlot *slot = new ValueSlot();
+				slot->Name = Name;
+				slot->Value = Value;
+				Values.Add(slot);
+			}
 		}
 	}
 }

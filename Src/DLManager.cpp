@@ -198,12 +198,14 @@ void DLManager::UpdateScreen(bool force)
 						{
 							FilePage *page = (FilePage*)mMain->GetNotebook()->GetPage(j);
 
-							page->SetGaugeValue((float)tmp->GetDownloadedSize()/tmp->GetFileSize()*100);
+							page->SetGaugeValue((float)tmp->GetDownloadedSize()/tmp->GetFileSize()*100.0);
 							page->SetFileSize(tmp->GetFileSize());
 							page->SetDownloadedSize(tmp->GetDownloadedSize());
 
 							if (mConfig)
 								page->SetBlockSize(mConfig->ReadIntValue("BlockSize",2048));
+
+							page->Refresh();
 							
 							break;
 						}
@@ -219,6 +221,29 @@ void DLManager::UpdateScreen(bool force)
 		text.Printf("Total speed : %.1f Kb/s",TotalSpeed/1000.0);
 		mMain->SetStatusText(text);
 	}
+}
+
+void DLManager::UpdateBlocks(FileDownloader *tmp)
+{
+	if (tmp)
+		for (int j=1;j<mMain->GetNotebook()->GetPageCount();j++)
+		{
+			if (mMain->GetNotebook()->GetPageText(j) == tmp->GetFilename())
+			{
+				FilePage *page = (FilePage*)mMain->GetNotebook()->GetPage(j);
+
+				//page->SetGaugeValue((float)tmp->GetDownloadedSize()/tmp->GetFileSize()*100.0);
+				page->SetFileSize(tmp->GetFileSize());
+				page->SetDownloadedSize(tmp->GetDownloadedSize());
+
+				//if (mConfig)
+					//page->SetBlockSize(mConfig->ReadIntValue("BlockSize",2048));
+
+				page->Refresh();
+				
+				break;
+			}
+		}
 }
 
 void DLManager::StartDownload(wxString link)
