@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="curllib.lib WinMM.Lib WS2_32.Lib Wldap32.Lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib odbc32.lib wxFlatNotebookd.lib"
+				AdditionalDependencies="curllib.lib WinMM.Lib WS2_32.Lib Wldap32.Lib wxmsw28d_adv.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib odbc32.lib wxFlatNotebookd.lib"
 				OutputFile="$(InputDir)..\Final\DEBUG-$(ProjectName).exe"
 				Version=""
 				LinkIncremental="2"
@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="curllib.lib WinMM.Lib WS2_32.Lib Wldap32.Lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib odbc32.lib wxFlatNotebook.lib"
+				AdditionalDependencies="curllib.lib WinMM.Lib WS2_32.Lib Wldap32.Lib wxmsw28_adv.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib wsock32.lib odbc32.lib wxFlatNotebook.lib"
 				OutputFile="$(InputDir)..\Final\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\lib\curl-7.18.1\lib\Release\&quot;;&quot;..\lib\wxWidgets-2.8.7\lib\vc_lib&quot;;..\lib\wxflatnotebook\lib\"
@@ -378,6 +378,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TaskBarIcon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\wxVistaGauge.cpp"
 				>
 			</File>
@@ -437,6 +441,10 @@
 			</File>
 			<File
 				RelativePath=".\StateData.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TaskBarIcon.h"
 				>
 			</File>
 			<File

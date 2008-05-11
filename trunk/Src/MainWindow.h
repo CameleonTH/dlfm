@@ -35,6 +35,7 @@ public:
 	void OnIdle(wxIdleEvent &event);
 	void OnTimer(wxTimerEvent &event);
 	void OnClose(wxCloseEvent &event);
+	void OnIconize(wxIconizeEvent &event);
 
 	void ShowLog(bool show=true);
 

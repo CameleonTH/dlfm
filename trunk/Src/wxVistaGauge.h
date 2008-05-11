@@ -17,6 +17,7 @@ public:
               const wxString& name = wxGaugeNameStr);
 
 	void OnPaint(wxPaintEvent &event);
+	void EraseBackGround(wxEraseEvent &event);
 
 	DECLARE_EVENT_TABLE()
 };

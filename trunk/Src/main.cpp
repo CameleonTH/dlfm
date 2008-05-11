@@ -6,6 +6,7 @@
 //#include <wx/thread.h>
 
 #include "MainWindow.h"
+#include "TaskBarIcon.h"
 #include "DLManager.h"
 #include "FreeFileDownloader.h"
 #include "FileDownloader.h"
@@ -43,6 +44,8 @@ bool MyApp::OnInit()
 	SetTopWindow(main);
 
 	DLManager *manager = new DLManager(config);
+
+	TaskBarIcon *TBIcon = new TaskBarIcon(main);
 
 	if (manager)
 	{

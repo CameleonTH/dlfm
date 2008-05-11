@@ -2,6 +2,7 @@
 
 BEGIN_EVENT_TABLE(wxVistaGauge, wxGauge)
 	EVT_PAINT(wxVistaGauge::OnPaint)
+	EVT_ERASE_BACKGROUND(wxVistaGauge::EraseBackGround)
 END_EVENT_TABLE()
 
 wxVistaGauge::wxVistaGauge(wxWindow *parent,
@@ -15,6 +16,11 @@ wxVistaGauge::wxVistaGauge(wxWindow *parent,
 	:wxGauge(parent,id,range,pos,wxSize(size.x,18),style,validator,name)
 {
 	
+}
+
+void wxVistaGauge::EraseBackGround(wxEraseEvent &event)
+{
+
 }
 
 void wxVistaGauge::OnPaint(wxPaintEvent &event)

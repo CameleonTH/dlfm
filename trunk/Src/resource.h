@@ -2,10 +2,10 @@
 // Microsoft Visual C++ generated include file.
 // Used by DL.Free Manager.rc
 //
-#define IDI_ICON                        109
-#define IDB_BITMAP1                     110
-#define IDB_BITMAP2                     111
-#define IDB_BITMAP3                     112
+//#define IDI_ICON                        109
+//#define IDB_BITMAP1                     110
+//#define IDB_BITMAP2                     111
+//#define IDB_BITMAP3                     112
 
 // Next default values for new objects
 // 

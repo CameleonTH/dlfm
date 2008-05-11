@@ -12,6 +12,7 @@ public:
 	void OnPaint(wxPaintEvent &event);
 	void OnSize( wxSizeEvent &event );
 	void OnScroll(wxScrollWinEvent& event);
+	void EraseBackGround(wxEraseEvent &event);
 
 	void SetBlockSize(int size) { BlockSize = size; }
 	void SetTotalData(long total);
@@ -21,6 +22,7 @@ public:
 private:
 	long	TotalData;
 	long	ProgressData;
+	long	LastProgressData;
 	int		BlockSize;
 
 	bool ScrollUdpate;

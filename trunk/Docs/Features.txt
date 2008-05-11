@@ -1,3 +1,5 @@
+EC = En Cours
+
 0.2
 OK	Sauvegardes de la liste des fichiers
 OK	Suppression d'un téléchargement
@@ -5,9 +7,10 @@ OK	Blocks d'avancement
 
 0.2.5
 	Gestion des erreurs
+EC	TrayIcon
 
 0.3
-	EnCours	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d'avancement,...)
+EC	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d'avancement,...)
 	Otions
 	Mise dans la barre des taches
 	Gestion des ftp

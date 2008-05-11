@@ -4,6 +4,7 @@ BEGIN_EVENT_TABLE(ProgressBlocks, wxScrolledWindow)
 	EVT_PAINT(ProgressBlocks::OnPaint)
 	EVT_SIZE(ProgressBlocks::OnSize)
 	EVT_SCROLLWIN(ProgressBlocks::OnScroll)
+	EVT_ERASE_BACKGROUND(ProgressBlocks::EraseBackGround)
 END_EVENT_TABLE()
 
 ProgressBlocks::ProgressBlocks(wxWindow *parent,
@@ -14,6 +15,7 @@ ProgressBlocks::ProgressBlocks(wxWindow *parent,
 {
 	 TotalData=0;
 	 ProgressData=0;
+	 LastProgressData=0;
 	 BlockSize=20480;
 	 SetScrollbars(1,18,1,18,1,1);
 	 ScrollUdpate=true;
@@ -29,6 +31,11 @@ void ProgressBlocks::SetTotalData(long total)
 	}
 }
 
+void ProgressBlocks::EraseBackGround(wxEraseEvent &event) // Fonction vide
+{
+
+}
+
 void ProgressBlocks::OnPaint(wxPaintEvent &event)
 {
 	wxScrolledWindow::OnPaint(event);
@@ -40,8 +47,11 @@ void ProgressBlocks::OnPaint(wxPaintEvent &event)
 
 	PrepareDC(vDc);
 
-	//ClearBackground();
-	//vDc.Clear();
+	wxPen mGrayPen ( wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE), 1, wxSOLID );
+	vDc.SetPen(mGrayPen);
+
+	wxBrush mGrayBrush( wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE), wxSOLID );
+	vDc.SetBrush(mGrayBrush);
 
 	int w,h;
 	GetSize(&w,&h);
@@ -65,12 +75,6 @@ void ProgressBlocks::OnPaint(wxPaintEvent &event)
 	wxLogDebug("W %d H %d",w,h);
 	wxLogDebug("W %d H %d",lw,lh);
 
-	if (ScrollUdpate==true)
-	{
-		this->SetScrollbars(1,blue.GetHeight(),1,lht+1,0,0);
-		ScrollUdpate=false;
-	}
-
 	long scroll = this->GetScrollPos(1);
 	wxLogDebug("Scroll %d",scroll);
 	long Data=scroll*(lw);
@@ -81,20 +85,25 @@ void ProgressBlocks::OnPaint(wxPaintEvent &event)
 		{
 			if (Data*BlockSize>=TotalData)
 			{
-				exit=true;
-				break;
+				vDc.DrawRectangle(blue.GetWidth()*j,blue.GetHeight()*i+blue.GetHeight()*scroll,blue.GetWidth(),blue.GetHeight());
+				//exit=true;
 				//break;
 				//break;
 				wxLogDebug("Pos %d",blue.GetHeight()*i+blue.GetHeight()*scroll);
+			}else{
+				if ((Data)*BlockSize<=ProgressData)
+					vDc.DrawBitmap(blue,blue.GetWidth()*j,blue.GetHeight()*i+blue.GetHeight()*scroll);
+				else
+					vDc.DrawBitmap(grey,blue.GetWidth()*j,blue.GetHeight()*i+blue.GetHeight()*scroll);				
 			}
-
-			if ((Data)*BlockSize<=ProgressData)
-				vDc.DrawBitmap(blue,blue.GetWidth()*j,blue.GetHeight()*i+blue.GetHeight()*scroll);
-			else
-				vDc.DrawBitmap(grey,blue.GetWidth()*j,blue.GetHeight()*i+blue.GetHeight()*scroll);				
-
 			Data++;
 		}
+	}
+
+	if (ScrollUdpate==true)
+	{
+		this->SetScrollbars(1,blue.GetHeight(),1,lht+1,0,0);
+		ScrollUdpate=false;
 	}
 }
 
