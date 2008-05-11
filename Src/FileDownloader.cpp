@@ -19,6 +19,7 @@ FileDownloader::FileDownloader(FileDownloader& copy)
 	iTime=GetTickCount();
 	Status = copy.Status;
 	bAlreadyRun=false;
+	bStartDL=copy.bStartDL;
 
 	pOutput=NULL;	
 	pCurl=NULL;
@@ -93,6 +94,7 @@ FileDownloader::FileDownloader(wxString link,wxString filename,DLManager *manage
 	pOutput=NULL;	
 	pCurl=NULL;
 	Manager = manager;
+	bStartDL=false;
 
 	if ( Create() != wxTHREAD_NO_ERROR )
     {
@@ -148,7 +150,7 @@ void *FileDownloader::Entry()
 
 		pMutex->Unlock();
 
-		bStartDL=false;		
+		//bStartDL=false;		
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {
 		  fprintf(stderr, "Curl perform failed: %s\n", curl_easy_strerror(Res));
@@ -247,6 +249,7 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 			wxLogMessage("Size: %d Size2: %f",size,size2+size3);*/
 			//CURLINFO_REQUEST_SIZE
 
+			//wxLogMessage("Size: %d",size);
 			if (pFFD->iDataPos>0)
 				if (size!=pFFD->iFileSize)
 				{
