@@ -8,6 +8,7 @@ OK	Blocks d'avancement
 0.2.5
 	Gestion des erreurs
 EC	TrayIcon
+	Gestion des fichiers de téléchargement (taille incorrecte, fichier déja existant,...)
 
 0.3
 EC	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d'avancement,...)
