@@ -342,6 +342,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\error.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FileDownloader.cpp"
 				>
 			</File>

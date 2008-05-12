@@ -109,14 +109,14 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 	//bookStyle |= wxFNB_BACKGROUND_GRADIENT;
 	bookStyle |= wxFNB_COLORFUL_TABS;
 	bookStyle |= wxFNB_NODRAG;
-	bookStyle |= wxFNB_CUSTOM_DLG;
+	//bookStyle |= wxFNB_CUSTOM_DLG;
 	//bookStyle |= wxFNB_SMART_TABS;	
 
 	book = new wxFlatNotebook(mSplitter, wxID_ANY, wxDefaultPosition, wxSize(300, 400), bookStyle);
 	if (book)
 	{
 		//book->SetBackgroundColour(col);
-		book->SetCustomizeOptions(wxFNB_CUSTOM_TAB_LOOK | wxFNB_CUSTOM_LOCAL_DRAG | wxFNB_CUSTOM_FOREIGN_DRAG);
+		//book->SetCustomizeOptions(wxFNB_CUSTOM_TAB_LOOK | wxFNB_CUSTOM_LOCAL_DRAG | wxFNB_CUSTOM_FOREIGN_DRAG);
 
 		//book->SetBackgroundColour(wxColour(89,177,255));
 		//book->SetGradientColorFrom(wxColour(89,177,255));
