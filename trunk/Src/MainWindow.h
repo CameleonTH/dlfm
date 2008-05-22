@@ -38,6 +38,8 @@ public:
 	void OnIconize(wxIconizeEvent &event);
 
 	void ShowLog(bool show=true);
+	
+	wxFrame *GetLogWindow() { return LogWin; }
 
 	enum
 	{
