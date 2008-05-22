@@ -1,5 +1,8 @@
 #include "wx/wx.h"
 
+#ifndef _LOGWINDOW_
+#define _LOGWINDOW_
+
 class LogWindow : public wxFrame
 {
 public:
@@ -12,3 +15,5 @@ private:
 	wxTextCtrl *mLogText;
 	wxLogTextCtrl *mLogCtrl;
 };
+
+#endif

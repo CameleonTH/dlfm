@@ -1,5 +1,6 @@
 #include "wx/wx.h"
 #include "wx/taskbar.h"
+#include "MainWindow.h"
 
 class TaskBarIcon : public wxTaskBarIcon
 {
@@ -19,5 +20,5 @@ public:
 
 	DECLARE_EVENT_TABLE()
 private:
-	wxFrame *dialog;
+	MainWindow *dialog;
 };

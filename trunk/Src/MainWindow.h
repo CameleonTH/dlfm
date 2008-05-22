@@ -15,6 +15,9 @@
 
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
 
+#ifndef _MAINWINDOW_
+#define _MAINWINDOW_
+
 class MainWindow : public wxFrame
 {
 public:
@@ -75,3 +78,5 @@ private:
 
 	wxTimer			Timer;
 };
+
+#endif
