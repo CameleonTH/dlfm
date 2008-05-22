@@ -25,5 +25,7 @@ void TaskBarIcon::OnLeftButtonDClick(wxTaskBarIconEvent& event)
 	{
 		dialog->Show(true);
 		dialog->Restore();
+		dialog->GetLogWindow()->Show(true);
+		dialog->GetLogWindow()->Restore();
 	}
 }

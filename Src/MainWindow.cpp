@@ -316,5 +316,6 @@ void MainWindow::OnClose(wxCloseEvent &event)
 
 void MainWindow::OnIconize(wxIconizeEvent &event)
 {                                                                                                      
-	Show(false);                                                                                            
+	Show(false);
+	LogWin->Show(false);
 }
