@@ -15,7 +15,7 @@ END_EVENT_TABLE()
 
 TaskBarIcon::TaskBarIcon(wxFrame *frame)
 {
-	dialog = frame;
+	dialog = (MainWindow*)frame;
 	SetIcon(wxIcon("IDI_ICON"),"DL.Free Manager");
 }
 
