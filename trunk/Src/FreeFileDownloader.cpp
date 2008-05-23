@@ -40,6 +40,7 @@ void *FreeFileDownloader::Entry()
 		if (Res != CURLE_OK) {
 		  wxLogMessage("Curl perform failed: %s\n", curl_easy_strerror(Res));
 		  Status = FFD_ERROR;
+		  Error = ERROR_HOST_NOT_FOUND;
 		  return 0;
 		}
 
@@ -49,6 +50,7 @@ void *FreeFileDownloader::Entry()
 		if (pHeader=="" || pLinkPageRef=="")
 		{
 			Status = FFD_ERROR;
+			Error = ERROR_FREE_SERVER;
 			return NULL;
 		}
 
@@ -93,9 +95,13 @@ void *FreeFileDownloader::Entry()
 			//wxLogMessage("pLinkPageRef : %d\n",pLinkPageRef);
 			Res = curl_easy_perform(pCurl);
 			if (Res != CURLE_OK) {
-			  wxLogMessage( "Curl perform failed: %s\n", curl_easy_strerror(Res));
-			  Status = FFD_ERROR;
-			  return 0;
+				if (Status!=FFD_STOP)
+				{
+					wxLogMessage( "Curl perform failed: %s\n", curl_easy_strerror(Res));
+					Status = FFD_ERROR;
+					Error = ERROR_HOST_NOT_FOUND;
+					return 0;
+				}
 			}
 
 		}
@@ -130,6 +136,7 @@ void *FreeFileDownloader::Entry()
 			pFinalLink = page.substr(pos+1,max-pos);
 		}else{
 			Status = FFD_ERROR;
+			Error = ERROR_FREE_DATA_CORRUPT;
 			return NULL;
 		}
 
@@ -156,9 +163,13 @@ void *FreeFileDownloader::Entry()
 
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {
-		  wxLogError("Curl perform failed: %s\n", curl_easy_strerror(Res));
-		  Status = FFD_ERROR;
-		  return 0;
+			if (Status!=FFD_STOP)
+			{
+				wxLogError("Curl perform failed: %s\n", curl_easy_strerror(Res));
+				Status = FFD_ERROR;
+				Error = ERROR_HOST_NOT_FOUND;
+				return 0;
+			}
 		}
 
 		wxLogMessage("Ouverture fichier\n");
@@ -166,6 +177,7 @@ void *FreeFileDownloader::Entry()
 		if (!pOutput)
 		{
 			Status = FFD_ERROR;
+			Error = ERROR_FILE_NOT_OPEN;
 			return 0;
 		}
 
@@ -197,9 +209,13 @@ void *FreeFileDownloader::Entry()
 
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {
-		  wxLogMessage("Curl perform failed: %s\n", curl_easy_strerror(Res));
-		  Status = FFD_ERROR;
-		  return 0;
+			if (Status!=FFD_STOP)
+			{
+				wxLogMessage("Curl perform failed: %s\n", curl_easy_strerror(Res));
+				Status = FFD_ERROR;
+				Error = ERROR_HOST_NOT_FOUND;
+				return 0;
+			}
 		}
 		
 		if (Status==FFD_START)
