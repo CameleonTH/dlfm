@@ -56,6 +56,8 @@ public:
 private:
 	DECLARE_EVENT_TABLE()
 
+	Config			*mConfig;
+
 	LogWindow		*LogWin;
 
 	wxPanel			*mPanel;

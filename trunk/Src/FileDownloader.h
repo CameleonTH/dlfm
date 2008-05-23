@@ -20,6 +20,16 @@ public:
 	FileDownloader(FileDownloader& copy);
 	~FileDownloader(void);
 
+	enum FFD_State
+	{
+		FFD_STOP,
+		FFD_START,
+		FFD_FINISH,
+		FFD_ERROR,
+		FFD_CHECK,
+		FFD_MAX
+	};
+
 	virtual wxString GetClass() { return wxString("FileDownloader"); }
 
 	virtual void StartDownload();	// Commence ou reprend le téléchargement
@@ -55,17 +65,9 @@ public:
 	int GetStatus() { return Status; }
 	int GetErrorCode() { return Error; }
 
-	bool AlreadyRun() { return bAlreadyRun; }
+	void SetStatus(FFD_State status) { Status=status; }
 
-	enum FFD_State
-	{
-		FFD_STOP,
-		FFD_START,
-		FFD_FINISH,
-		FFD_ERROR,
-		FFD_CHECK,
-		FFD_MAX
-	};
+	bool AlreadyRun() { return bAlreadyRun; }
 
 	wxMutex *pMutex;
 protected:
