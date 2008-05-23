@@ -24,7 +24,8 @@ DLManager::DLManager(Config *config)
 	{
 		for (int i=0;i<List.Count();i++)
 		{
-			List[i]->StartDownload();
+			if (List[i]->GetStatus()!=FileDownloader::FFD_FINISH)
+				List[i]->StartDownload();
 		}
 	}
 	UpdateScreen(true);
@@ -407,6 +408,9 @@ void DLManager::LoadDownloads()
 			
 			fread(&Size,sizeof(long),1,file);
 			temp->SetDownloadedSize(Size);
+
+			if (temp->GetFileSize()==temp->GetDownloadedSize())
+				temp->SetStatus(FileDownloader::FFD_FINISH);
 
 			List.Add(temp);
 		}

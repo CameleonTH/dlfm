@@ -21,9 +21,9 @@ public:
 	void		Save();
 
 	bool		ValueExist(wxString ValueName);
-	wxString	ReadStringValue(wxString ValueName,wxString Default="");
-	int			ReadIntValue(wxString ValueName,int Default=0);
-	float		ReadFloatValue(wxString ValueName,float Default=0);
+	wxString	ReadStringValue(wxString ValueName,wxString Default="",bool WriteDefaultValue=true);
+	int			ReadIntValue(wxString ValueName,int Default=0,bool WriteDefaultValue=true);
+	float		ReadFloatValue(wxString ValueName,float Default=0,bool WriteDefaultValue=true);
 
 	void		WriteStringValue(wxString ValueName,wxString Value);
 	void		WriteIntValue(wxString ValueName,int Value);

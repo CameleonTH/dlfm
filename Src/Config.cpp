@@ -128,7 +128,7 @@ bool Config::ValueExist(wxString ValueName)
 	return false;
 }
 
-wxString Config::ReadStringValue(wxString ValueName,wxString Default)
+wxString Config::ReadStringValue(wxString ValueName,wxString Default,bool WriteDefaultValue)
 {
 	if (ValueExist(ValueName))
 	{
@@ -137,26 +137,35 @@ wxString Config::ReadStringValue(wxString ValueName,wxString Default)
 			if (Values[i]->Name == ValueName)
 			return Values[i]->Value;
 		}
-	}else
+	}else{
+		if (WriteDefaultValue)
+			WriteStringValue(ValueName,Default);
 		return Default;
+	}
 }
 
-int Config::ReadIntValue(wxString ValueName,int Default)
+int Config::ReadIntValue(wxString ValueName,int Default,bool WriteDefaultValue)
 {
 	if (ValueExist(ValueName))
 	{
 		return atoi(ReadStringValue(ValueName).c_str());
-	}else
+	}else{
+		if (WriteDefaultValue)
+			WriteIntValue(ValueName,Default);
 		return Default;
+	}
 }
 
-float Config::ReadFloatValue(wxString ValueName,float Default)
+float Config::ReadFloatValue(wxString ValueName,float Default,bool WriteDefaultValue)
 {
 	if (ValueExist(ValueName))
 	{
 		return atof(ReadStringValue(ValueName).c_str());
-	}else
+	}else{
+		if (WriteDefaultValue)
+			WriteFloatValue(ValueName,Default);
 		return Default;
+	}
 }
 
 void Config::WriteStringValue(wxString ValueName,wxString Value)

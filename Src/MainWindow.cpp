@@ -14,7 +14,7 @@ BEGIN_EVENT_TABLE(MainWindow, wxFrame)
 END_EVENT_TABLE()
 
 MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, int x, int y, int w, int h*/)
- : wxFrame(frame, wxID_ANY, wxString("DL.Free Manager 0.2 Alpha By CameleonTH"), wxPoint(10, 10), wxSize(640,480))
+ : wxFrame(frame, wxID_ANY, wxString("DL.Free Manager 0.2.5 Alpha By CameleonTH"), wxPoint(10, 10), wxSize(640,480))
 {
 	wxColour col = wxColour(117,174,255);
 	//SetBackgroundColour(col);
@@ -25,6 +25,8 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 //#ifdef DEBUG
 	LogWin->Show();
 //#endif
+
+	mConfig = config;
 
 	SetSize(config->ReadIntValue("Width",640),config->ReadIntValue("Height",480));
 
@@ -310,6 +312,8 @@ void MainWindow::OnClose(wxCloseEvent &event)
 	}
 
 	mDLManager->SaveDownloads();
+
+	mConfig->Save();
 
 	exit(0);
 }
