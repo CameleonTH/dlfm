@@ -33,6 +33,7 @@ FileDownloader::FileDownloader(FileDownloader& copy)
     {
         wxLogError(wxT("Can't create thread!"));
 		Status=FFD_ERROR;
+		Error=ERROR_THREAD_NOT_CREATE;
 		Manager->UpdateScreen(true);
         return;
     }
@@ -100,6 +101,7 @@ FileDownloader::FileDownloader(wxString link,wxString filename,DLManager *manage
     {
         wxLogError(wxT("Can't create thread!"));
 		Status=FFD_ERROR;
+		Error=ERROR_THREAD_NOT_CREATE;
         return;
     }
 }
@@ -153,8 +155,11 @@ void *FileDownloader::Entry()
 		//bStartDL=false;		
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {
-		  fprintf(stderr, "Curl perform failed: %s\n", curl_easy_strerror(Res));
-		  return 0;
+			if (Status!=FFD_STOP)
+			{
+				fprintf(stderr, "Curl perform failed: %s\n", curl_easy_strerror(Res));
+				return 0;
+			}
 		}
 
 		if (Status==FFD_START)
@@ -193,6 +198,7 @@ void FileDownloader::StartDownload()
     {
         wxLogError(wxT("wxTHREAD_RUNNING"));
 		Status=FFD_ERROR;
+		Error=ERROR_THREAD_NOT_CREATE;
     }
 }
 
@@ -254,6 +260,7 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 				if (size!=pFFD->iFileSize)
 				{
 					pFFD->Status=FFD_ERROR;
+					pFFD->Error=ERROR_DIFFERENT_FILESIZE;
 					return 0;
 				}
 
@@ -307,6 +314,7 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 		if (len!=size*nmemb)
 		{
 			pFFD->Status=FFD_ERROR;
+			pFFD->Error=ERROR_FILE_WRITE_ERROR;
 			pFFD->Manager->UpdateScreen(true);
 		}
 		return len;		

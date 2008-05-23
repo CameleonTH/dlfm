@@ -167,7 +167,7 @@ void DLManager::UpdateScreen(bool force)
 					text.Printf("Stop");
 					break;
 				case FileDownloader::FFD_ERROR:
-					text.Printf("Erreur");
+					text.Printf("%s",ERROR_DESC[tmp->GetErrorCode()]);
 					break;
 				case FileDownloader::FFD_FINISH:
 					text.Printf("Finish");

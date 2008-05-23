@@ -53,6 +53,7 @@ public:
 
 	//FFD_State GetStatus();
 	int GetStatus() { return Status; }
+	int GetErrorCode() { return Error; }
 
 	bool AlreadyRun() { return bAlreadyRun; }
 
