@@ -1,4 +1,5 @@
 EC = En Cours
+MC = Maybe Corrected
 
 0.2
 OK	Sauvegardes de la liste des fichiers
@@ -6,25 +7,53 @@ OK	Suppression d'un téléchargement
 OK	Blocks d'avancement
 
 0.2.5
-	Gestion des erreurs
-EC	TrayIcon
-	Gestion des fichiers de téléchargement (taille incorrecte, fichier déja existant,...)
+OK	Gestion des erreurs
+OK	TrayIcon
+EC	Gestion des fichiers de téléchargement (taille incorrecte, fichier déja existant,...) : à completer et vérifier
 
 0.3
-EC	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d'avancement,...)
-	Otions
-	Mise dans la barre des taches
-	Gestion des ftp
-	Amélioration interface
-	Gestion plusieurs langues
-	Gestion des reprise automatique en cas d'erreurs
+MC	BUG : Correction Bug Vitesse
+MC	BUG : Correction fichier verouillé d'un téléchargement finie
+OK	BUG : TaskBarIcone qui à la fermeture rester.
+MC	BUG : Redémarrage du thread a la fin du dl
+	BUG : Le premier téléchargement ne se met as a jour. (Affichage ou téléchargement ?)
+OK	Nombre max de téléchargement en cours
+OK	Mise en attente d'un téléchargement
+OK	Reprise d'un téléhargement en attente lorsqu'un téléchargement est finie
+OK	Gestion des reprise automatique en cas d'erreurs
 
 0.4
-	Gestion de dossiers (En cours, finie, corbeille)
+OK	BUG : Lors d'un retry d'un téléchargement, le téléchargement suivant se met route quand il est en wait.
+OK	BUG : Lors de l'arret multiple de plusieurs téléchargement, seul le premier est mis en pause
+OK	Icones pour le status des téléchargements
+OK	Gestion plusieurs langues
+	Gestion automatique des copier coller pour ajouter automatiquement les DL
+	Un seul instanciation du programme
+	Gestion d'ajout d'un lien en passant le lien en argument
+	
+
+0.5
+	Mise en place du message d'erreur lorsque l'ajout d'un téléchargement est un échéc
+EC	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d'avancement,...)
+	Otions
+	Clic droit sur download
+	Otimisation des blocks de progression
+
+
+0.6
 	About
 	Menus
 	Séléction multiple
-	Status Bar
+EC	Status Bar
 	Gestionnaire de vitesse
 	Schedule
 	Graphique de vitesse
+	Amélioration TrayIcon
+	Amélioration interface
+
+0.7
+	Gestion des ftp
+	Gestion de dossiers (En cours, finie, corbeille)
+	
+0.8
+	Découapge des DL en plusieurs fichiers

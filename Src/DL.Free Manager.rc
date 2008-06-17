@@ -9,6 +9,8 @@
 //
 #include "afxres.h"
 
+#include "error.h"
+
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -53,8 +55,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION VERSIONID
+ PRODUCTVERSION VERSIONID
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,14 +72,14 @@ BEGIN
         BLOCK "040c04b0"
         BEGIN
             VALUE "CompanyName", "Thibault HENNEQUIN"
-            VALUE "FileDescription", "DL.Free Manager"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "DL.Free Manager"
+            VALUE "FileDescription", NAME
+            VALUE "FileVersion", VERSION
+            VALUE "InternalName", NAME
             VALUE "LegalCopyright", "Copyright (C) 2008"
             VALUE "LegalTrademarks", "Thibault HENNEQUIN"
-            VALUE "OriginalFilename", "DL.Free Manager"
-            VALUE "ProductName", "DL.Free Manager"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+            VALUE "OriginalFilename", NAME
+            VALUE "ProductName", NAME
+            VALUE "ProductVersion", VERSION
         END
     END
     BLOCK "VarFileInfo"
@@ -99,11 +101,16 @@ IDB_DELETE              BITMAP                  "bitmap/Delete.bmp"
 IDB_WXVISTAGAUGE_BEGIN  BITMAP                  "bitmap/wxVistaGauge/begin.bmp"
 IDB_WXVISTAGAUGE_MIDDLE BITMAP                  "bitmap/wxVistaGauge/middle.bmp"
 IDB_WXVISTAGAUGE_END    BITMAP                  "bitmap/wxVistaGauge/end.bmp"
-IDB_WXVISTAGAUGE_BLOCKBEGIN BITMAP              "bitmap/wxVistaGauge/begin block.bmp"
-IDB_WXVISTAGAUGE_BLOCKMIDDLE BITMAP             "bitmap/wxVistaGauge/middle block.bmp"
-IDB_WXVISTAGAUGE_BLOCKEND BITMAP                "bitmap/wxVistaGauge/end block.bmp"
+IDB_WXVISTAGAUGE_BLOCKBEGIN BITMAP                  "bitmap/wxVistaGauge/begin block.bmp"
+IDB_WXVISTAGAUGE_BLOCKMIDDLE BITMAP                  "bitmap/wxVistaGauge/middle block.bmp"
+IDB_WXVISTAGAUGE_BLOCKEND BITMAP                  "bitmap/wxVistaGauge/end block.bmp"
 IDB_BLOCK_BLUE          BITMAP                  "bitmap/block.bmp"
 IDB_BLOCK_GREY          BITMAP                  "bitmap/blockgrey.bmp"
+IDB_STARTED             BITMAP                  "bitmap/Started.bmp"
+IDB_STOPED              BITMAP                  "bitmap/Stoped.bmp"
+IDB_ERROR               BITMAP                  "bitmap/Error.bmp"
+IDB_WAIT                BITMAP                  "bitmap\\Wait.bmp"
+IDB_FINISH              BITMAP                  "bitmap\\Finish.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

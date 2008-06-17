@@ -1,6 +1,10 @@
 #include "wx/wx.h"
 #include "wx/taskbar.h"
-#include "MainWindow.h"
+
+#ifndef _TASKBARICON_
+#define _TASKBARICON_
+
+class MainWindow;
 
 class TaskBarIcon : public wxTaskBarIcon
 {
@@ -22,3 +26,5 @@ public:
 private:
 	MainWindow *dialog;
 };
+
+#endif

@@ -10,6 +10,8 @@
 #include "Parser.h"
 #include "LogWindow.h"
 #include "Config.h"
+#include "TaskBarIcon.h"
+#include "error.h"
 
 //#include "wx/aui/aui.h"
 
@@ -25,6 +27,7 @@ public:
 	~MainWindow();
 
 	void AttachDLManager(DLManager *manager);
+	void AttachTaskBarIcon(TaskBarIcon *icon);
 
 	inline wxListCtrl *GetListCtrl() { return mList; }
 	inline wxFlatNotebook *GetNotebook() { return book; }
@@ -55,6 +58,8 @@ public:
 	};
 private:
 	DECLARE_EVENT_TABLE()
+
+	TaskBarIcon		*mTaskBarIcon;
 
 	Config			*mConfig;
 

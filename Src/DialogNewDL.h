@@ -2,7 +2,7 @@
 
 class DialogNewDL : public wxDialog
 {
-public:
+public:	 
 	DialogNewDL(wxWindow *parent);
 
 	int ShowModal();
@@ -33,6 +33,8 @@ private:
 	wxButton *mCancel;
 	wxTextCtrl *mLink;
 	wxTextCtrl *mFilename;
+	//wxLabel *mLinkLabel;
+	//wxLabel *mFIlenameLabel;
 
 	wxString Link;
 	wxString Filename;

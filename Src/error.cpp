@@ -4,6 +4,7 @@ extern char *ERROR_DESC[] =
 	"Erreur : fichier déja existant",
 	"Erreur : Erreur d'écriture du fichier",
 	"Erreur : Impossible d'ouvrir le fichier",
+	"Erreur : Impossible d'ouvrir une connection",
 	"Erreur : Host non trouvé",
 	"Erreur : Impossible de créer le thread de téléchargement",
 	"Erreur : Taille du fichier différent",

@@ -19,9 +19,11 @@ public:
 
 	void UpdateScreen(bool force=false);
 	void UpdateBlocks(FileDownloader *file);
+	void UpdateOnce(FileDownloader *dl,bool grey);
 
 	void StartDownload(wxString link);
-	void StopDownload(wxString link);
+	void StartDownload(FileDownloader *dl,bool ResetRetyCount=false,bool force=false);
+	void StopDownload(wxString link,bool update=true);
 	void DeleteDownload(wxString link);
 
 	void LoadDownloads();
@@ -33,6 +35,11 @@ public:
 
 	Config *mConfig;
 	long Time;
+
+	int MaxRetry;
+	int RetryTime;
+	int MaxDL;
+
 	enum
 	{
 		DL_HTTP,
