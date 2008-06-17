@@ -39,14 +39,16 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc "
 				Optimization="0"
+				InlineFunctionExpansion="0"
 				AdditionalIncludeDirectories="&quot;..\lib\curl-7.18.1\include&quot;;&quot;..\lib\wxWidgets-2.8.7\include\&quot;;&quot;..\lib\wxWidgets-2.8.7\lib\vc_lib\mswd\&quot;;..\lib\wxflatnotebook\include\"
-				PreprocessorDefinitions="CURL_STATICLIB;WIN32;__WXMSW__;_WINDOWS;_DEBUG;__WXDEBUG__;NOPCH"
+				PreprocessorDefinitions="CURL_STATICLIB;WIN32;__WXMSW__;_WINDOWS;_DEBUG;__WXDEBUG__;NOPCH;DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				EnableFunctionLevelLinking="true"
 				PrecompiledHeaderFile=".\DLFM.ch"
 				WarningLevel="4"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -68,6 +70,7 @@
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="libcmtd.lib"
 				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./DLFM.pdb"
 				TargetMachine="1"
 				Profile="false"
 			/>
@@ -122,14 +125,18 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc"
+				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="&quot;..\lib\curl-7.18.1\include&quot;;&quot;..\lib\wxWidgets-2.8.7\include\&quot;;&quot;..\lib\wxWidgets-2.8.7\lib\vc_lib\msw&quot;;..\lib\wxflatnotebook\include\"
 				PreprocessorDefinitions="CURL_STATICLIB;WIN32;__WXMSW__;_WINDOWS;NOPCH"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile="./DLFM.pch"
+				ExpandAttributedSource="false"
 				WarningLevel="0"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -151,6 +158,7 @@
 				AdditionalLibraryDirectories="&quot;..\lib\curl-7.18.1\lib\Release\&quot;;&quot;..\lib\wxWidgets-2.8.7\lib\vc_lib&quot;;..\lib\wxflatnotebook\lib\"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="libcmt.lib"
+				GenerateDebugInformation="false"
 				ProgramDatabaseFile="./DLFM.pdb"
 				SubSystem="0"
 				TargetMachine="1"
@@ -358,6 +366,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LanguageManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LogWindow.cpp"
 				>
 			</File>
@@ -404,6 +416,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogOptions.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DLManager.h"
 				>
 			</File>
@@ -421,6 +437,10 @@
 			</File>
 			<File
 				RelativePath=".\FreeFileDownloader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LanguageManager.h"
 				>
 			</File>
 			<File
@@ -478,7 +498,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\bitmap\Error.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\bitmap\Finish.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\bitmap\icon.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\bitmap\Started.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\bitmap\Stoped.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\bitmap\Wait.bmp"
 				>
 			</File>
 			<Filter
@@ -529,94 +569,6 @@
 		<Filter
 			Name="vcl"
 			>
-			<File
-				RelativePath="..\lib\wxvcl\classes.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\classes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\comctrls.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\comctrls.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\dateutils.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\dateutils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\dialogs.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\dialogs.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\fileutil.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\fileutil.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\graphics.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\inifiles.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\inifiles.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\strutils.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\strutils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\sysconst.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\sysconst.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\sysset.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\system.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\system.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\sysutils.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\wxvcl\sysutils.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

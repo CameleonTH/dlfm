@@ -12,13 +12,13 @@ BEGIN_EVENT_TABLE(DialogNewDL,wxDialog)
 END_EVENT_TABLE()
 
 DialogNewDL::DialogNewDL(wxWindow *parent)
-	: wxDialog(parent,wxID_ANY,wxString("New download"),wxDefaultPosition,wxSize(250,400))
+	: wxDialog(parent,wxID_ANY,wxString("New download"),wxDefaultPosition,wxSize(250,150)) //400
 {
 	mLink=NULL;
 	mFilename=NULL;
-	mOK = new wxButton(this,ID_DNDL_OK,wxString("OK"),wxPoint(10,330),wxSize(75,25));
+	mOK = new wxButton(this,ID_DNDL_OK,wxString("OK"),wxPoint(10,90),wxSize(75,25)); //330
 
-	mCancel = new wxButton(this,ID_DNDL_CANCEL,wxString("Cancel"),wxPoint(95,330),wxSize(75,25));
+	mCancel = new wxButton(this,ID_DNDL_CANCEL,wxString("Cancel"),wxPoint(95,90),wxSize(75,25));
 
 	mLink = new wxTextCtrl(this,ID_DNDL_LINK,wxString(""),wxPoint(10,10),wxSize(220,25));
 	//mLink->SetValue(_T("http://dl.free.fr/getfile.pl?file=/mceva576/Final.rar"));
@@ -55,7 +55,7 @@ int DialogNewDL::ShowModal()
 	return wxDialog::ShowModal();
 }
 
-void DialogNewDL::OnButtonOkClick(wxCommandEvent &event)
+void DialogNewDL::OnButtonOkClick(wxCommandEvent&)
 {
 	bool FileExist=false;
 	if (Parser::IsValidLink((char*)mLink->GetValue().c_str()) && mFilename->GetValue()!="" && FileExist==false)
@@ -73,7 +73,7 @@ void DialogNewDL::OnButtonOkClick(wxCommandEvent &event)
 	}
 }
 
-void DialogNewDL::OnButtonCancelClick(wxCommandEvent &event)
+void DialogNewDL::OnButtonCancelClick(wxCommandEvent&)
 {
 	//width = WxSpinCtrlWidth->GetValue();
 	//height = WxSpinCtrHeight->GetValue();
@@ -91,7 +91,7 @@ wxString DialogNewDL::GetFilename()
 	return Parser::FirstLine(Filename);
 }
 
-void DialogNewDL::OnFocus(wxCommandEvent &event)
+void DialogNewDL::OnFocus(wxCommandEvent&)
 {
 	return;
 	wxLogDebug("Focus");

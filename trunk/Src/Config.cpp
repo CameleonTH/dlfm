@@ -7,6 +7,17 @@ Config::Config(wxString Filename)
 	Values.Clear();
 }
 
+bool Config::ExistFile()
+{
+	FILE *file = fopen(mFilename,"rb");
+	if (file)
+	{
+		fclose(file);
+		return true;
+	}
+	return false;
+}
+
 void Config::Load()
 {
 	Values.Clear();
@@ -28,15 +39,25 @@ void Config::Load()
 				{
 				case STATE_NONE:
 					if (car=='#')
+					{
+						Name="";
 						State=STATE_COM;
-					else if (car!='\t' || car!='\n' || car!='\r')
+					}else if (car!='\t' || car!='\n' || car!='\r')
 					{
 						State=STATE_PRENAME;
 					}
 					break;
 				case STATE_COM:
 					if (car=='\n' || car=='\r')
+					{
+						ValueSlot *slot = new ValueSlot();
+						slot->Name = Name;
+						slot->Value = "";
+						slot->IsCom=true;
+						Values.Add(slot);
 						State=STATE_NONE;
+					}else
+						Name+=car;					
 					break;
 				case STATE_PRENAME:
 					if (car=='\t' || car=='\n' || car=='\r')
@@ -72,12 +93,13 @@ void Config::Load()
 					}
 					break;
 				case STATE_VALUE:
-					if (car=='\t' || car=='\n' || car=='\r' || car==' ' || car=='=')
+					if (car=='\t' || car=='\n' || car=='\r' /*|| car==' '*/ || car=='=')
 					{
 						//wxLogMessage("Name : %s, Value : %s",Name,Value);
 						ValueSlot *slot = new ValueSlot();
 						slot->Name = Name;
 						slot->Value = Value;
+						slot->IsCom=false;
 						Values.Add(slot);
 						State=STATE_NONE;
 					}else
@@ -96,6 +118,7 @@ void Config::Load()
 				ValueSlot *slot = new ValueSlot();
 				slot->Name = Name;
 				slot->Value = Value;
+				slot->IsCom=false;
 				Values.Add(slot);
 			}
 		}
@@ -109,7 +132,10 @@ void Config::Save()
 	{
 		for (int i=0;i<Values.Count();i++)
 		{
-			fprintf(file,"%s=%s\n",Values[i]->Name,Values[i]->Value);
+			if (Values[i]->IsCom)
+				fprintf(file,"#%s\n",Values[i]->Name);
+			else
+				fprintf(file,"%s=%s\n",Values[i]->Name,Values[i]->Value);
 		}
 	}			  
 	fclose(file);
@@ -120,7 +146,8 @@ bool Config::ValueExist(wxString ValueName)
 {
 	for (int i=0;i<Values.Count();i++)
 	{
-		if (Values[i]->Name == ValueName)
+
+		if (Values[i]->IsCom==false && Values[i]->Name == ValueName)
 		{
 			return true;
 		}
@@ -134,7 +161,7 @@ wxString Config::ReadStringValue(wxString ValueName,wxString Default,bool WriteD
 	{
 		for (int i=0;i<Values.Count();i++)
 		{
-			if (Values[i]->Name == ValueName)
+			if (Values[i]->IsCom==false && Values[i]->Name == ValueName)
 			return Values[i]->Value;
 		}
 	}else{
@@ -187,6 +214,7 @@ void Config::WriteStringValue(wxString ValueName,wxString Value)
 		{
 			slot->Name = ValueName;
 			slot->Value = Value;
+			slot->IsCom=false;
 			Values.Add(slot);
 		}
 	}

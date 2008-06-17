@@ -1,4 +1,5 @@
 #include "FreeFileDownloader.h"
+#include "DLManager.h"
 #include <string>
 
 FreeFileDownloader::FreeFileDownloader(const char *link,const char *filename,DLManager *manager)
@@ -38,10 +39,14 @@ void *FreeFileDownloader::Entry()
 		wxLogMessage("pLinkPageRef : %d\n",pLinkPageRef);
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {
-		  wxLogMessage("Curl perform failed: %s\n", curl_easy_strerror(Res));
-		  Status = FFD_ERROR;
-		  Error = ERROR_HOST_NOT_FOUND;
-		  return 0;
+			wxLogMessage("Curl perform failed: %s\n", curl_easy_strerror(Res));
+			if (RetryCount>=Manager->MaxRetry)
+				Status=FFD_ERROR;
+			else
+				Status=FFD_RETRY;
+			ErrorTime=GetTickCount();
+			Error = ERROR_HOST_NOT_FOUND;
+			return 0;
 		}
 
 		wxLogMessage("Header\n\n%s",pHeader);
@@ -49,7 +54,11 @@ void *FreeFileDownloader::Entry()
 
 		if (pHeader=="" || pLinkPageRef=="")
 		{
-			Status = FFD_ERROR;
+			if (RetryCount>=Manager->MaxRetry)
+				Status=FFD_ERROR;
+			else
+				Status=FFD_RETRY;
+			ErrorTime=GetTickCount();
 			Error = ERROR_FREE_SERVER;
 			return NULL;
 		}
@@ -98,7 +107,11 @@ void *FreeFileDownloader::Entry()
 				if (Status!=FFD_STOP)
 				{
 					wxLogMessage( "Curl perform failed: %s\n", curl_easy_strerror(Res));
-					Status = FFD_ERROR;
+					if (RetryCount>=Manager->MaxRetry)
+						Status=FFD_ERROR;
+					else
+						Status=FFD_RETRY;
+					ErrorTime=GetTickCount();
 					Error = ERROR_HOST_NOT_FOUND;
 					return 0;
 				}
@@ -135,7 +148,11 @@ void *FreeFileDownloader::Entry()
 			//strcpy(pFinalLink,page.substr(pos+1,max-pos).c_str());
 			pFinalLink = page.substr(pos+1,max-pos);
 		}else{
-			Status = FFD_ERROR;
+			if (RetryCount>=Manager->MaxRetry)
+				Status=FFD_ERROR;
+			else
+				Status=FFD_RETRY;
+			ErrorTime=GetTickCount();
 			Error = ERROR_FREE_DATA_CORRUPT;
 			return NULL;
 		}
@@ -166,7 +183,11 @@ void *FreeFileDownloader::Entry()
 			if (Status!=FFD_STOP)
 			{
 				wxLogError("Curl perform failed: %s\n", curl_easy_strerror(Res));
-				Status = FFD_ERROR;
+				if (RetryCount>=Manager->MaxRetry)
+					Status=FFD_ERROR;
+				else
+					Status=FFD_RETRY;
+				ErrorTime=GetTickCount();
 				Error = ERROR_HOST_NOT_FOUND;
 				return 0;
 			}
@@ -176,7 +197,11 @@ void *FreeFileDownloader::Entry()
 		pOutput = fopen(pFileName,"ab");
 		if (!pOutput)
 		{
-			Status = FFD_ERROR;
+			if (RetryCount>=Manager->MaxRetry)
+				Status=FFD_ERROR;
+			else
+				Status=FFD_RETRY;
+			ErrorTime=GetTickCount();
 			Error = ERROR_FILE_NOT_OPEN;
 			return 0;
 		}
@@ -212,7 +237,11 @@ void *FreeFileDownloader::Entry()
 			if (Status!=FFD_STOP)
 			{
 				wxLogMessage("Curl perform failed: %s\n", curl_easy_strerror(Res));
-				Status = FFD_ERROR;
+				if (RetryCount>=Manager->MaxRetry)
+					Status=FFD_ERROR;
+				else
+					Status=FFD_RETRY;
+				ErrorTime=GetTickCount();
 				Error = ERROR_HOST_NOT_FOUND;
 				return 0;
 			}
@@ -220,11 +249,19 @@ void *FreeFileDownloader::Entry()
 		
 		if (Status==FFD_START)
 			Status=FFD_FINISH;
+		
+		Manager->UpdateScreen(true);
 
 		//wxLogMessage("Header\n\n%s",pHeader);
 
 		//wxLogMessage("File Size : %d",Parser::GetFileSizeHTTP(pHeader));
 	}
+	if (RetryCount>=Manager->MaxRetry)
+		Status=FFD_ERROR;
+	else
+		Status=FFD_RETRY;
+	ErrorTime=GetTickCount();
+	Error=ERROR_CONNECTION_FAILED;
 	return 0;
 }
 /*void FreeFileDownloader::OnExit()

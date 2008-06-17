@@ -14,7 +14,7 @@ BEGIN_EVENT_TABLE(MainWindow, wxFrame)
 END_EVENT_TABLE()
 
 MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, int x, int y, int w, int h*/)
- : wxFrame(frame, wxID_ANY, wxString("DL.Free Manager 0.2.5 Alpha By CameleonTH"), wxPoint(10, 10), wxSize(640,480))
+ : wxFrame(frame, wxID_ANY, wxString(TITLE), wxPoint(10, 10), wxSize(640,480))
 {
 	wxColour col = wxColour(117,174,255);
 	//SetBackgroundColour(col);
@@ -23,12 +23,13 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 
 	LogWin = new LogWindow(this,wxString("Log Window"),10,10,300,200);
 //#ifdef DEBUG
-	LogWin->Show();
+	if (config->ReadIntValue("LogWindow",0))
+		LogWin->Show();
 //#endif
 
 	mConfig = config;
 
-	SetSize(config->ReadIntValue("Width",640),config->ReadIntValue("Height",480));
+	SetSize(config->ReadIntValue("Width",800),config->ReadIntValue("Height",600));
 
 	if (config->ReadIntValue("FullScreen",0))
 		Maximize();
@@ -52,11 +53,11 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 	mToolBar->SetMargins(4, 4);
 	mToolBar->SetToolBitmapSize(wxSize(48,48));
 		
-	wxToolBarToolBase *tool = mToolBar->AddTool(ID_ADD,wxString("Add"),wxBitmap("IDB_ADD"));
+	wxToolBarToolBase *tool = mToolBar->AddTool(ID_ADD,ADDDOWNLOAD,wxBitmap("IDB_ADD"));
 	//tool->Enable(false);
-	mToolBar->AddTool(ID_START,wxString("Start"),wxBitmap("IDB_START"));
-	mToolBar->AddTool(ID_STOP,wxString("Stop"),wxBitmap("IDB_STOP"));
-	mToolBar->AddTool(ID_DELETE,wxString("Delete"),wxBitmap("IDB_DELETE"));
+	mToolBar->AddTool(ID_START,STARTDOWNLOAD,wxBitmap("IDB_START"));
+	mToolBar->AddTool(ID_STOP,STOPDOWNLOAD,wxBitmap("IDB_STOP"));
+	mToolBar->AddTool(ID_DELETE,DELETEDOWNLOAD,wxBitmap("IDB_DELETE"));
 
 	//.EnableTool(0,false)
 	//mToolBar->AddRadioTool(wxID_ANY,wxString("Test"),NULL);
@@ -113,6 +114,7 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 	bookStyle |= wxFNB_NODRAG;
 	//bookStyle |= wxFNB_CUSTOM_DLG;
 	//bookStyle |= wxFNB_SMART_TABS;	
+	mList=NULL;
 
 	book = new wxFlatNotebook(mSplitter, wxID_ANY, wxDefaultPosition, wxSize(300, 400), bookStyle);
 	if (book)
@@ -125,15 +127,30 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 		//book->SetGradientColorTo(wxColour(89,177,255));
 		book->SetGradientColorBorder(wxColour(89,177,255));
 
-		mList = new wxListCtrl(book,wxID_ANY,wxDefaultPosition,book->GetPageBestSize(),wxLC_SINGLE_SEL |wxLC_REPORT);
-		mList->InsertColumn(0,wxString("Filename"));
-		mList->InsertColumn(1,wxString("Size"));
-		mList->InsertColumn(2,wxString("Downloaded"));
+		mList = new wxListCtrl(book,wxID_ANY,wxDefaultPosition,book->GetPageBestSize(),/*wxLC_SINGLE_SEL |*/ wxLC_REPORT);
+		mList->InsertColumn(0,FILENAME);
+		mList->SetColumnWidth(0,mConfig->ReadIntValue("ColumnFilenameWidth",200));
+		mList->InsertColumn(1,SIZE);
+		mList->SetColumnWidth(1,mConfig->ReadIntValue("ColumnSizeWidth",100));
+		mList->InsertColumn(2,DOWNLOADED);
+		mList->SetColumnWidth(2,mConfig->ReadIntValue("ColumnDownloadedWidth",100));
 		mList->InsertColumn(3,wxString("%"));
-		mList->InsertColumn(4,wxString("Status"));
-		mList->InsertColumn(5,wxString("Speed"));
+		mList->SetColumnWidth(3,mConfig->ReadIntValue("ColumnPercentageWidth",50));
+		mList->InsertColumn(4,STATUS);
+		mList->SetColumnWidth(4,mConfig->ReadIntValue("ColumnStatusWidth",150));
+		mList->InsertColumn(5,SPEED);
+		mList->SetColumnWidth(5,mConfig->ReadIntValue("ColumnSpeedWidth",75));
 		mList->InsertColumn(6,wxString("URL"));
-		
+		mList->SetColumnWidth(6,mConfig->ReadIntValue("ColumnURLWidth",200));
+
+		wxImageList *imagelist = new wxImageList(16,16,true);
+		imagelist->Add(wxBitmap("IDB_STARTED"));
+		imagelist->Add(wxBitmap("IDB_STOPED"));
+		imagelist->Add(wxBitmap("IDB_ERROR"));
+		imagelist->Add(wxBitmap("IDB_WAIT"));
+		imagelist->Add(wxBitmap("IDB_FINISH"));
+		mList->SetImageList(imagelist,wxIMAGE_LIST_SMALL);
+
 		/*long tmp = mList->InsertItem(0,wxString("test"));
 		wxLogMessage("id : %d",tmp);
 		long tmp2 = mList->InsertItem(0,wxString("test2"));
@@ -151,7 +168,7 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 
 		//mDLManager->mMain = this;
 
-		bool result = book->AddPage(mList,wxString("Downloads List"));
+		bool result = book->AddPage(mList,DOWNLOADSLIST);
 		//wxWindow(
 		//wxLogWarning("%d",result);
 		//result = book->AddPage(new wxPanel(book),wxString("Options"));
@@ -189,6 +206,11 @@ void MainWindow::AttachDLManager(DLManager *manager)
 	mDLManager->UpdateScreen(true);
 }
 
+void MainWindow::AttachTaskBarIcon(TaskBarIcon *icon)
+{
+	mTaskBarIcon = icon;
+}
+
 void MainWindow::ShowLog(bool show)
 {
 	if (show)
@@ -202,7 +224,10 @@ void MainWindow::AddDownload()
 	DialogNewDL *dlg = new DialogNewDL(this);
 	if (dlg->ShowModal()==0)
 	{
-		mDLManager->AddDownload(dlg->GetLink(),dlg->GetFilename());
+		if (mDLManager->AddDownload(dlg->GetLink(),dlg->GetFilename())==false)
+		{
+			//TODO : Message d'erreur à placer
+		}
 	}
 
 	dlg->Destroy();
@@ -211,38 +236,27 @@ void MainWindow::AddDownload()
 
 void MainWindow::StartDownload()
 {
-	long selected = -1;
 	for (int long i=0;i<mList->GetItemCount();i++)
 	{
 		if (mList->GetItemState(i,wxLIST_STATE_SELECTED))
 		{
-			selected=i;
-			break;
+			mDLManager->StartDownload(mList->GetItemText(i));
+			//break;
 		}
-	}
-	if (selected!=-1)
-	{
-		wxLogDebug(mList->GetItemText(selected));
-		mDLManager->StartDownload(mList->GetItemText(selected));
 	}
 }
 
 void MainWindow::StopDownload()
 {
-	long selected = -1;
 	for (int long i=0;i<mList->GetItemCount();i++)
 	{
 		if (mList->GetItemState(i,wxLIST_STATE_SELECTED))
 		{
-			selected=i;
-			break;
+			mDLManager->StopDownload(mList->GetItemText(i),false);
 		}
 	}
-	if (selected!=-1)
-	{
-		wxLogDebug(mList->GetItemText(selected));
-		mDLManager->StopDownload(mList->GetItemText(selected));
-	}
+
+	mDLManager->UpdateScreen(true);
 }
 
 void MainWindow::DeleteDownload()
@@ -313,7 +327,21 @@ void MainWindow::OnClose(wxCloseEvent &event)
 
 	mDLManager->SaveDownloads();
 
+	mConfig->WriteIntValue("ColumnFilenameWidth",mList->GetColumnWidth(0));
+	mConfig->WriteIntValue("ColumnSizeWidth",mList->GetColumnWidth(1));
+	mConfig->WriteIntValue("ColumnDownloadedWidth",mList->GetColumnWidth(2));
+	mConfig->WriteIntValue("ColumnPercentageWidth",mList->GetColumnWidth(3));
+	mConfig->WriteIntValue("ColumnStatusWidth",mList->GetColumnWidth(4));
+	mConfig->WriteIntValue("ColumnSpeedWidth",mList->GetColumnWidth(5));
+	mConfig->WriteIntValue("ColumnURLWidth",mList->GetColumnWidth(6));
+
+	mConfig->WriteIntValue("Width",GetSize().x);
+	mConfig->WriteIntValue("Height",GetSize().y);
+	mConfig->WriteIntValue("Fullscreen",IsMaximized());
+
 	mConfig->Save();
+
+	mTaskBarIcon->RemoveIcon();
 
 	exit(0);
 }

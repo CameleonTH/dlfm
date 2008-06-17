@@ -1,4 +1,5 @@
 #include "TaskBarIcon.h"
+#include "MainWindow.h"
 
 BEGIN_EVENT_TABLE(TaskBarIcon, wxTaskBarIcon)
 	EVT_TASKBAR_LEFT_DCLICK(TaskBarIcon::OnLeftButtonDClick)
@@ -17,6 +18,7 @@ TaskBarIcon::TaskBarIcon(wxFrame *frame)
 {
 	dialog = (MainWindow*)frame;
 	SetIcon(wxIcon("IDI_ICON"),"DL.Free Manager");
+	SetIcon(wxIcon());
 }
 
 void TaskBarIcon::OnLeftButtonDClick(wxTaskBarIconEvent& event)

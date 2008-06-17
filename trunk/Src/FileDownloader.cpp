@@ -7,7 +7,8 @@ FileDownloader::FileDownloader(FileDownloader& copy)
 	pLink = copy.pLink;
 	pFileName = copy.pFileName;
 
-	pMutex = new wxMutex(); // copy.pMutex;
+	//pMutex = new wxMutex(); // copy.pMutex;
+	//pMutex=copy.pMutex;
 
 	pStatePage.pParent = this;
 	pStateHeader.pParent = this;
@@ -20,6 +21,9 @@ FileDownloader::FileDownloader(FileDownloader& copy)
 	Status = copy.Status;
 	bAlreadyRun=false;
 	bStartDL=copy.bStartDL;
+	RetryCount=copy.RetryCount;
+
+	Error=ERROR_NONE;
 
 	pOutput=NULL;	
 	pCurl=NULL;
@@ -29,10 +33,12 @@ FileDownloader::FileDownloader(FileDownloader& copy)
 
 	Manager = copy.Manager;
 
+	return;
 	if ( Create() != wxTHREAD_NO_ERROR )
     {
         wxLogError(wxT("Can't create thread!"));
 		Status=FFD_ERROR;
+		ErrorTime=GetTickCount();
 		Error=ERROR_THREAD_NOT_CREATE;
 		Manager->UpdateScreen(true);
         return;
@@ -71,10 +77,9 @@ FileDownloader::FileDownloader(wxString link,wxString filename,DLManager *manage
 	pLink = link;
 	pFileName = filename;
 
+	//pMutex = new wxMutex();
 
-	pMutex = new wxMutex();
-
-	wxLogDebug("Filename : %s",pFileName);
+	//wxLogDebug("Filename : %s",pFileName);
 
 	//Status=FFD_STOP;
 
@@ -97,6 +102,10 @@ FileDownloader::FileDownloader(wxString link,wxString filename,DLManager *manage
 	Manager = manager;
 	bStartDL=false;
 
+	Error=ERROR_NONE;
+
+	RetryCount=0;	
+
 	if ( Create() != wxTHREAD_NO_ERROR )
     {
         wxLogError(wxT("Can't create thread!"));
@@ -108,7 +117,7 @@ FileDownloader::FileDownloader(wxString link,wxString filename,DLManager *manage
 
 FileDownloader::~FileDownloader(void)
 {
-	delete pMutex;
+	//delete pMutex;
 }
 
 void *FileDownloader::Entry()
@@ -117,12 +126,12 @@ void *FileDownloader::Entry()
 	pCurl = curl_easy_init();
 	if (pCurl)
 	{
-		pMutex->Lock();
+		/*pMutex->Lock();*/
 		CURLcode Res;
 
 		wxLogMessage("Ouverture fichier\n");
-		pOutput = fopen(pFileName,"ab");
-		pMutex->Unlock();
+		pOutput = fopen("downloads/"+pFileName,"ab");
+		/*pMutex->Unlock();*/
 		if (!pOutput)
 			return 0;
 
@@ -132,7 +141,7 @@ void *FileDownloader::Entry()
 		//iDataPos = ftell(pOutput);
 		//wxLogMessage("Pos : %d\n",iDataPos);
 
-		pMutex->Lock();
+		/*pMutex->Lock();*/
 		char Range[64];
 		Range[0]='\0';
 		sprintf_s(Range,64,"%d-",iDataPos);
@@ -150,21 +159,36 @@ void *FileDownloader::Entry()
 		curl_easy_setopt(pCurl, CURLOPT_WRITEHEADER, &pStateHeader);
 		curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, WriteData);
 
-		pMutex->Unlock();
+		/*pMutex->Unlock();*/
 
 		//bStartDL=false;		
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {
+			wxLogError("Erreur de DL");
 			if (Status!=FFD_STOP)
 			{
 				fprintf(stderr, "Curl perform failed: %s\n", curl_easy_strerror(Res));
+				if (RetryCount<Manager->MaxRetry)
+					Status=FFD_RETRY;
+				else
+					Status=FFD_ERROR;
+				ErrorTime=GetTickCount();
+				Error=ERROR_HOST_NOT_FOUND;
 				return 0;
 			}
 		}
 
 		if (Status==FFD_START)
 			Status=FFD_FINISH;
+
+		Manager->UpdateScreen(true);
 	}
+	/*if (RetryCount>=Manager->MaxRetry)
+		Status=FFD_ERROR;
+	else*/
+		Status=FFD_RETRY;
+	ErrorTime=GetTickCount();
+	Error=ERROR_CONNECTION_FAILED;
 	return 0;
 }
 
@@ -184,6 +208,8 @@ void FileDownloader::OnExit()
 	if (pCurl)
 		curl_easy_cleanup(pCurl);
 	pCurl=NULL;
+	fMoySpeed=0;
+	fSpeed=0;
 }
 
 void FileDownloader::StartDownload()
@@ -192,12 +218,26 @@ void FileDownloader::StartDownload()
 		return;
 	Status=FFD_START;
 	Manager->UpdateScreen(true);
+
+	if ( Create() != wxTHREAD_NO_ERROR )
+    {
+        wxLogError(wxT("Can't create thread!"));
+		Status=FFD_ERROR;
+		ErrorTime=GetTickCount();
+		Error=ERROR_THREAD_NOT_CREATE;
+		Manager->UpdateScreen(true);
+        return;
+    }
 	int error = Run();
 	bAlreadyRun=true;
 	if ( error == wxTHREAD_RUNNING )
     {
         wxLogError(wxT("wxTHREAD_RUNNING"));
-		Status=FFD_ERROR;
+		if (RetryCount<Manager->MaxRetry)
+			Status=FFD_RETRY;
+		else
+			Status=FFD_ERROR;
+		ErrorTime=GetTickCount();
 		Error=ERROR_THREAD_NOT_CREATE;
     }
 }
@@ -205,7 +245,6 @@ void FileDownloader::StartDownload()
 void FileDownloader::StopDownload()
 {
 	Status = FFD_STOP;
-	Manager->UpdateScreen(true);
 }
 
 size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *userp)
@@ -259,7 +298,11 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 			if (pFFD->iDataPos>0)
 				if (size!=pFFD->iFileSize)
 				{
-					pFFD->Status=FFD_ERROR;
+					if (pFFD->RetryCount<pFFD->Manager->MaxRetry)
+						pFFD->Status=FFD_RETRY;
+					else
+						pFFD->Status=FFD_ERROR;
+					pFFD->ErrorTime=GetTickCount();
 					pFFD->Error=ERROR_DIFFERENT_FILESIZE;
 					return 0;
 				}
@@ -313,7 +356,11 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 
 		if (len!=size*nmemb)
 		{
-			pFFD->Status=FFD_ERROR;
+			if (pFFD->RetryCount<pFFD->Manager->MaxRetry)
+					pFFD->Status=FFD_RETRY;
+				else
+					pFFD->Status=FFD_ERROR;
+			pFFD->ErrorTime=GetTickCount();
 			pFFD->Error=ERROR_FILE_WRITE_ERROR;
 			pFFD->Manager->UpdateScreen(true);
 		}

@@ -6,8 +6,10 @@
 class ValueSlot
 {
 public:
+	ValueSlot(wxString name=wxString(""), wxString value=wxString(""),bool Com=false) { Name=name; Value=value; IsCom=Com; }
 	wxString Name;
 	wxString Value;
+	bool IsCom;
 };
 
 WX_DEFINE_ARRAY_PTR(ValueSlot*, wxArrayValueSlot);
@@ -28,6 +30,10 @@ public:
 	void		WriteStringValue(wxString ValueName,wxString Value);
 	void		WriteIntValue(wxString ValueName,int Value);
 	void		WriteFloatValue(wxString ValueName,float Value);
+
+	void		SetFilename(wxString filename) { mFilename=filename; }
+	wxString	GetFilename() { return mFilename; }
+	bool		ExistFile();
 
 private:
 	enum

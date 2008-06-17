@@ -20,13 +20,17 @@ public:
 	FileDownloader(FileDownloader& copy);
 	~FileDownloader(void);
 
+	bool IsOK() { if (Status==FFD_ERROR /*&& Error==ERROR_THREAD_NOT_CREATE*/) return false; return true; }
+
 	enum FFD_State
 	{
 		FFD_STOP,
 		FFD_START,
+		FFD_WAIT,
 		FFD_FINISH,
 		FFD_ERROR,
-		FFD_CHECK,
+		FFD_RETRY,
+		//FFD_CHECK,
 		FFD_MAX
 	};
 
@@ -37,8 +41,8 @@ public:
 
 	virtual long GetFileSize() { return iFileSize;}
 	virtual long GetDownloadedSize() { return iDataPos;}
-	inline wxString GetFilename() { pMutex->Lock();wxString tem = pFileName;pMutex->Unlock();return tem; }
-	inline wxString GetLink() { pMutex->Lock();wxString tem = pLink;pMutex->Unlock();return tem; }
+	inline wxString GetFilename() { /*pMutex->Lock()*/;wxString tem = pFileName;/*pMutex->Unlock()*/;return tem; }
+	inline wxString GetLink() { /*pMutex->Lock();*/wxString tem = pLink;/*pMutex->Unlock();*/return tem; }
 	virtual float GetSpeed() { return fSpeed; }
 	virtual float GetMoySpeed() { return fMoySpeed; }
 
@@ -69,7 +73,10 @@ public:
 
 	bool AlreadyRun() { return bAlreadyRun; }
 
-	wxMutex *pMutex;
+	//wxMutex *pMutex;
+
+	int			RetryCount;
+	long		GetErrorTime() { return ErrorTime; }
 protected:
 	DLManager	*Manager;
 	wxString	pLink;				// Adresse du fichier free (exemple : http://dl.free.fr/2f5g3ds)
@@ -92,6 +99,7 @@ protected:
 
 	FFD_State	Status;
 	ERROR_CODE	Error;
+	long		ErrorTime;
 
 	bool		bAlreadyRun;
 	bool		bStartDL;
