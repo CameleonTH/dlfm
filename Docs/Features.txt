@@ -33,6 +33,10 @@ OK	Gestion plusieurs langues
 	Un seul instanciation du programme
 	Gestion d'ajout d'un lien en passant le lien en argument
 	Amélioration systéme de fichiers des téléchargements
+	Déplacement des téléchargements
+	Temps de téléchargement et estimation du temps restant
+	Gestion des priorités des téléchargements
+	Mise en priorité basse des téléchargement qui n'ont pas était télécharger
 
 0.5
 	Mise en place du message d'erreur lorsque l'ajout d'un téléchargement est un échéc
@@ -40,7 +44,7 @@ EC	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d
 	Otions
 	Clic droit sur download
 	Otimisation des blocks de progression
-
+	Vérification des téléchargement par MD5 (Optionnel)
 
 0.6
 	About
