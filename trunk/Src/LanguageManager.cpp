@@ -12,8 +12,8 @@ wxArrayString LanguageManager::AvailableLanguage()
 	wxString tem;
 	int Count=0;
 	//fopen(
-	Strings.Add("French");
-	Strings.Add("English");
+	//Strings.Add("French");
+	//Strings.Add("English");
 
 	wxDir *dir = new wxDir("\lang");
 	if (dir)
@@ -21,7 +21,9 @@ wxArrayString LanguageManager::AvailableLanguage()
 		while(dir->GetNext(&name))
 		{
 			if (name.AfterLast('.')=="lang")
+			{
 				Strings.Add(name.BeforeLast('.'));
+			}
 		}
 	}
 	return Strings;

@@ -23,14 +23,16 @@ OK	Reprise d'un téléhargement en attente lorsqu'un téléchargement est finie
 OK	Gestion des reprise automatique en cas d'erreurs
 
 0.4
+	BUG : Crash lors de l'arret d'un téléchargement
 OK	BUG : Lors d'un retry d'un téléchargement, le téléchargement suivant se met route quand il est en wait.
 OK	BUG : Lors de l'arret multiple de plusieurs téléchargement, seul le premier est mis en pause
+MC	FIX : Nouveau dispositif de Dl.free.fr
 OK	Icones pour le status des téléchargements
 OK	Gestion plusieurs langues
 	Gestion automatique des copier coller pour ajouter automatiquement les DL
 	Un seul instanciation du programme
 	Gestion d'ajout d'un lien en passant le lien en argument
-	
+	Amélioration systéme de fichiers des téléchargements
 
 0.5
 	Mise en place du message d'erreur lorsque l'ajout d'un téléchargement est un échéc

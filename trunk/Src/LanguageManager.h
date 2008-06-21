@@ -3,15 +3,17 @@
 #ifndef _LANGUAGEMANAGER_
 #define _LANGUAGEMANAGER_
 
-#define INIT_LOC extern LanguageManager *Language = new LanguageManager();
+#define LAGNUAGEMANAGERVAR _Language_
 
 #define DECLARE_SETUP_LOC void SetupLocalisationCaption();
-#define BEGIN_SETUP_LOC void LanguageManager::SetupLocalisationCaption() { Values.Clear();
+#define BEGIN_SETUP_LOC extern LanguageManager *LAGNUAGEMANAGERVAR = new LanguageManager(); \
+	void LanguageManager::SetupLocalisationCaption() { Values.Clear();
 #define ADD_CAPTION(Name,Default) Values.Add(new ValueSlot(Name,Default,false));
 #define END_SETUP_LOC }
 
-#define SETLANGUAGE(Language) (/*Language!=NULL ? */Language->LoadLanguage(Language))
-#define GETLOCALISATION(Value) (Language!=NULL ? Language->GetValue(Value) : "")
+#define SETLANGUAGE(Language) (LAGNUAGEMANAGERVAR!=NULL ? LAGNUAGEMANAGERVAR->LoadLanguage(Language) :;)
+#define GETLOCALISATION(Value) (LAGNUAGEMANAGERVAR!=NULL ? LAGNUAGEMANAGERVAR->GetValue(Value) : "")
+#define GETLANGUAGEAVAILABLE (LAGNUAGEMANAGERVAR!=NULL ? LAGNUAGEMANAGERVAR->AvailableLanguage() : wxArrayString())
 
 #define ADDDOWNLOAD GETLOCALISATION("AddDownload")
 #define STARTDOWNLOAD GETLOCALISATION("StartDownload")
@@ -40,6 +42,6 @@ private:
 	wxArrayValueSlot Values;
 };
 
-extern LanguageManager *Language;
+extern LanguageManager *LAGNUAGEMANAGERVAR;
 
 #endif
