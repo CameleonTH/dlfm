@@ -169,32 +169,32 @@ void *FreeFileDownloader::Entry()
 
 		wxLogMessage("Récupération de l'image\n");
 		//Télécharge le fichier im.pl pour initialiser le téléchargement
-		curl_easy_reset(pCurl);
-		//wxLogMessage("Charge /im.pl\n\n");
-		curl_easy_setopt(pCurl, CURLOPT_URL, "http://dl.free.fr/im.pl");
-		//curl_easy_setopt(pCurl, CURLOPT_VERBOSE, 1);
+			/*curl_easy_reset(pCurl);
+			//wxLogMessage("Charge /im.pl\n\n");
+			curl_easy_setopt(pCurl, CURLOPT_URL, "http://dl.free.fr/im.pl");
+			//curl_easy_setopt(pCurl, CURLOPT_VERBOSE, 1);
 
-		//curl_easy_setopt(pCurl, CURLOPT_WRITEDATA, pStateNone); 
-		//curl_easy_setopt(pCurl, CURLOPT_WRITEHEADER, pStateNone);
-		//curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, WriteData);
+			//curl_easy_setopt(pCurl, CURLOPT_WRITEDATA, pStateNone); 
+			//curl_easy_setopt(pCurl, CURLOPT_WRITEHEADER, pStateNone);
+			//curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, WriteData);
 
-		Res = curl_easy_perform(pCurl);
-		if (Res != CURLE_OK) {
-			if (Status!=FFD_STOP)
-			{
-				wxLogError("Curl perform failed: %s\n", curl_easy_strerror(Res));
-				if (RetryCount>=Manager->MaxRetry)
-					Status=FFD_ERROR;
-				else
-					Status=FFD_RETRY;
-				ErrorTime=GetTickCount();
-				Error = ERROR_HOST_NOT_FOUND;
-				return 0;
-			}
-		}
+			Res = curl_easy_perform(pCurl);
+			if (Res != CURLE_OK) {
+				if (Status!=FFD_STOP)
+				{
+					wxLogError("Curl perform failed: %s\n", curl_easy_strerror(Res));
+					if (RetryCount>=Manager->MaxRetry)
+						Status=FFD_ERROR;
+					else
+						Status=FFD_RETRY;
+					ErrorTime=GetTickCount();
+					Error = ERROR_HOST_NOT_FOUND;
+					return 0;
+				}
+			}*/
 
 		wxLogMessage("Ouverture fichier\n");
-		pOutput = fopen(pFileName,"ab");
+		pOutput = fopen(Manager->mConfig->ReadStringValue("DownloadPath","Downloads")+"/"+pFileName,"ab");
 		if (!pOutput)
 		{
 			if (RetryCount>=Manager->MaxRetry)
@@ -230,7 +230,8 @@ void *FreeFileDownloader::Entry()
 		curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, FileDownloader::WriteData);
 
 
-		pOutput = fopen(pFileName,"ab");
+		//pOutput = fopen(Manager->mConfig->ReadStringValue("DownloadPath","Downloads")+"/"+pFileName,"ab");
+		//pOutput = fopen(pFileName,"ab");
 
 		Res = curl_easy_perform(pCurl);
 		if (Res != CURLE_OK) {

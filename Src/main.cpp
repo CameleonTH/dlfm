@@ -3,6 +3,7 @@
 
 //#include "wx/wxprec.h"
 #include <wx\wx.h>
+#include <wx\snglinst.h>
 //#include <wx/thread.h>
 
 #include "MainWindow.h"
@@ -17,22 +18,14 @@
 class MyApp : public wxApp
 {
 public:
-    //MyApp();
-    //virtual ~MyApp(){};
-
     virtual bool OnInit();
 };
 
 // Create a new application object
-//DECLARE_APP(MyApp)
 IMPLEMENT_APP(MyApp)
 //IMPLEMENT_APP_CONSOLE(MyApp)
 
-/*MyApp::MyApp()
-{
-
-}*/
-INIT_LOC
+//INIT_LOC
 
 BEGIN_SETUP_LOC
 	ADD_CAPTION("AddDownload","Add download")
@@ -56,6 +49,20 @@ bool MyApp::OnInit()
 {
 	//wxImage::AddHandler(new wxPNGHandler);
 
+	//wxInitializer initializer;
+
+	wxSingleInstanceChecker checker;
+    if ( checker.Create(_T(".dlfm.lock")) )
+    {
+        if ( checker.IsAnotherRunning() )
+        {
+            wxPrintf(_T("Another instance of the program is running, exiting.\n"));
+
+            exit(2);
+        }
+	}else
+		exit(2);
+
 	Config *config = new Config("config.cfg");
 	if (config==NULL)
 	{
@@ -64,10 +71,13 @@ bool MyApp::OnInit()
 	}
 	config->Load();
 
-	if (Language)
+	if (LAGNUAGEMANAGERVAR)
 	{
-		bool result = Language->LoadLanguage(config->ReadStringValue("Language","English"));
-		Language->AvailableLanguage();
+		bool result = LAGNUAGEMANAGERVAR->LoadLanguage(config->ReadStringValue("Language","English"));
+		wxArrayString strings = GETLANGUAGEAVAILABLE;
+
+		//for (int i=0;i<strings.Count();i++)
+			//wxLogMessage("%s",strings[i]);
 		//wxLogMessage("Loaded language : %d %s",result,config->ReadStringValue("Language","English"));
 	}	
 

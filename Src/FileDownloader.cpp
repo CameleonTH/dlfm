@@ -130,7 +130,9 @@ void *FileDownloader::Entry()
 		CURLcode Res;
 
 		wxLogMessage("Ouverture fichier\n");
-		pOutput = fopen("downloads/"+pFileName,"ab");
+		
+			//pOutput = fopen("downloads/"+pFileName,"ab");
+		pOutput = fopen(Manager->mConfig->ReadStringValue("DownloadPath","Downloads")+"/"+pFileName,"ab");
 		/*pMutex->Unlock();*/
 		if (!pOutput)
 			return 0;
