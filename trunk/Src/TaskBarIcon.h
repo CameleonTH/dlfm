@@ -1,6 +1,8 @@
 #include "wx/wx.h"
 #include "wx/taskbar.h"
 
+#include "Config.h"
+
 #ifndef _TASKBARICON_
 #define _TASKBARICON_
 
@@ -10,7 +12,7 @@ class TaskBarIcon : public wxTaskBarIcon
 {
 public:
 
-    TaskBarIcon(wxFrame *frame);
+    TaskBarIcon(wxFrame *frame,Config *config);
 
 	void OnLeftButtonDClick(wxTaskBarIconEvent&);
     /*void OnMenuRestore(wxCommandEvent&);
@@ -25,6 +27,7 @@ public:
 	DECLARE_EVENT_TABLE()
 private:
 	MainWindow *dialog;
+	Config *mConfig;
 };
 
 #endif

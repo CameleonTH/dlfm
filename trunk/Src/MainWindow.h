@@ -43,6 +43,11 @@ public:
 	void OnClose(wxCloseEvent &event);
 	void OnIconize(wxIconizeEvent &event);
 
+	void OnCopyData(wxEvent &event);
+
+	// Pour récupérer le WM_COPYDATA
+	WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam);
+
 	void ShowLog(bool show=true);
 	
 	wxFrame *GetLogWindow() { return LogWin; }

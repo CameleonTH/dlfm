@@ -1,6 +1,7 @@
 #include "LogWindow.h"
 
 BEGIN_EVENT_TABLE(LogWindow, wxFrame)
+	EVT_CLOSE(LogWindow::OnClose)
 END_EVENT_TABLE()
 
 
@@ -21,4 +22,9 @@ LogWindow::LogWindow(wxFrame *frame, const wxString& title, int x, int y, int w,
 LogWindow::~LogWindow()
 {
 	wxLog::SetActiveTarget(NULL);
+}
+
+void LogWindow::OnClose(wxCloseEvent &event)
+{
+	Hide();
 }
