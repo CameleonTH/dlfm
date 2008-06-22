@@ -338,6 +338,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ArgumentParser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Config.cpp"
 				>
 			</File>
@@ -407,6 +411,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\ArgumentParser.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Config.h"
 				>
@@ -482,43 +490,11 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\bitmap\block.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\bitmap\blockgrey.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\bitmap\Delete.bmp"
-				>
-			</File>
-			<File
 				RelativePath=".\DL.Free Manager.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\bitmap\Error.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\bitmap\Finish.bmp"
-				>
-			</File>
-			<File
 				RelativePath=".\bitmap\icon.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\bitmap\Started.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\bitmap\Stoped.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\bitmap\Wait.bmp"
 				>
 			</File>
 			<Filter
@@ -529,11 +505,43 @@
 					>
 				</File>
 				<File
+					RelativePath=".\bitmap\block.bmp"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap\blockgrey.bmp"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap\Delete.bmp"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap\Error.bmp"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap\Finish.bmp"
+					>
+				</File>
+				<File
 					RelativePath=".\bitmap\Start.bmp"
 					>
 				</File>
 				<File
+					RelativePath=".\bitmap\Started.bmp"
+					>
+				</File>
+				<File
 					RelativePath=".\bitmap\Stop.bmp"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap\Stoped.bmp"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap\Wait.bmp"
 					>
 				</File>
 				<Filter

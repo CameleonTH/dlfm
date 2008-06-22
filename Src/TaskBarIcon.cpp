@@ -14,9 +14,10 @@ BEGIN_EVENT_TABLE(TaskBarIcon, wxTaskBarIcon)
 END_EVENT_TABLE()
 
 
-TaskBarIcon::TaskBarIcon(wxFrame *frame)
+TaskBarIcon::TaskBarIcon(wxFrame *frame,Config *config)
 {
 	dialog = (MainWindow*)frame;
+	mConfig=config;
 	SetIcon(wxIcon("IDI_ICON"),"DL.Free Manager");
 	SetIcon(wxIcon());
 }
@@ -27,7 +28,10 @@ void TaskBarIcon::OnLeftButtonDClick(wxTaskBarIconEvent& event)
 	{
 		dialog->Show(true);
 		dialog->Restore();
-		dialog->GetLogWindow()->Show(true);
-		dialog->GetLogWindow()->Restore();
+		if (mConfig && mConfig->ReadIntValue("LogWindow",0))
+		{
+			dialog->GetLogWindow()->Show(true);
+			dialog->GetLogWindow()->Restore();
+		}
 	}
 }

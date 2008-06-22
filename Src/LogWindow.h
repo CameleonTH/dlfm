@@ -8,6 +8,8 @@ class LogWindow : public wxFrame
 public:
 	LogWindow(wxFrame *frame, const wxString& title, int x, int y, int w, int h);
 	~LogWindow();
+
+	void OnClose(wxCloseEvent &event);
 private:
 	DECLARE_EVENT_TABLE()
 

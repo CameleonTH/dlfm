@@ -4,7 +4,12 @@
 #include "../lib/wxvcl/inifiles.h"
 #include "FileDownloader.h"
 
+//BEGIN_DECLARE_EVENT_TYPES()
+	//DECLARE_EVENT_TYPE(wxEVT_COPYDATA,WM_COPYDATA)
+//END_DECLARE_EVENT_TYPES()
+
 BEGIN_EVENT_TABLE(MainWindow, wxFrame)
+	//EVT_CUSTOM(WM_COPYDATA,wxID_ANY,MainWindow::OnCopyData)
 	EVT_CLOSE(MainWindow::OnClose)
 	EVT_ICONIZE(MainWindow::OnIconize)
 	EVT_TOOL(wxID_ANY, MainWindow::OnLeftClick)
@@ -305,14 +310,14 @@ void MainWindow::OnTimer(wxTimerEvent &event)
 {
 	mDLManager->UpdateScreen();
 
-	if (mGauge)
+	/*if (mGauge)
 	{
 		mGauge->SetValue(mGauge->GetValue()+1);
 		if (mGauge->GetValue()>mGauge->GetRange())
 			mGauge->SetValue(0);
 	}
 
-	mGauge->Refresh();
+	mGauge->Refresh();*/
 }
 
 void MainWindow::OnClose(wxCloseEvent &event)
@@ -350,4 +355,21 @@ void MainWindow::OnIconize(wxIconizeEvent &event)
 {                                                                                                      
 	Show(false);
 	LogWin->Show(false);
+}
+
+void MainWindow::OnCopyData(wxEvent &event)
+{
+	wxLogMessage("Copy Data Message");
+}
+
+WXLRESULT MainWindow::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam)
+{
+	if ( nMsg == WM_COPYDATA )
+	{
+		COPYDATASTRUCT *data = (COPYDATASTRUCT*)lParam;
+		wxLogMessage("Copy Data %s",data->lpData);
+		//return true;
+	}
+
+	return wxFrame::MSWWindowProc(nMsg,wParam,lParam);
 }

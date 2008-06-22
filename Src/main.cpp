@@ -5,6 +5,7 @@
 #include <wx\wx.h>
 #include <wx\snglinst.h>
 //#include <wx/thread.h>
+#include <windows.h>
 
 #include "MainWindow.h"
 #include "TaskBarIcon.h"
@@ -19,6 +20,12 @@ class MyApp : public wxApp
 {
 public:
     virtual bool OnInit();
+	virtual int OnExit();
+
+	//LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);
+	//DECLARE_MESSAGE_MAP()
+
+	wxSingleInstanceChecker *checker;
 };
 
 // Create a new application object
@@ -26,6 +33,11 @@ IMPLEMENT_APP(MyApp)
 //IMPLEMENT_APP_CONSOLE(MyApp)
 
 //INIT_LOC
+
+/*BEGIN_MESSAGE_MAP(MyApp, wxApp)
+  ON_MESSAGE(WM_COPYDATA, OnMyMessage)
+END_MESSAGE_MAP()*/
+
 
 BEGIN_SETUP_LOC
 	ADD_CAPTION("AddDownload","Add download")
@@ -51,14 +63,37 @@ bool MyApp::OnInit()
 
 	//wxInitializer initializer;
 
-	wxSingleInstanceChecker checker;
-    if ( checker.Create(_T(".dlfm.lock")) )
+	const wxString name = wxString::Format("DLFM-%s", wxGetUserId().c_str());
+
+	checker = new wxSingleInstanceChecker(name);
+    if ( checker )
     {
-        if ( checker.IsAnotherRunning() )
+        if ( checker->IsAnotherRunning() )
         {
             wxPrintf(_T("Another instance of the program is running, exiting.\n"));
 
-            exit(2);
+			//wxWindow::MSWProcessMessage();
+			//
+			wxString Args;
+			for (int i=1;i<argc;i++)
+			{
+				Args+="\"";
+				Args+=argv[i];
+				Args+="\" ";
+			}
+
+			COPYDATASTRUCT data;
+			data.dwData = 100;
+			data.lpData = (void*)Args.c_str();
+			data.cbData = strlen(Args)+1;
+			HWND handle = 0;
+			handle = FindWindowEx(0,0, NULL,TITLE);
+		
+			if (handle > 0) 
+				SendMessageA(handle, WM_COPYDATA, 0, (LPARAM)(&data));
+				//SendMessage(HWND_BROADCAST, WM_COPYDATA, 0, (LPARAM)(&data));
+
+			exit(0);
         }
 	}else
 		exit(2);
@@ -87,10 +122,12 @@ bool MyApp::OnInit()
 
 	DLManager *manager = new DLManager(config);
 
-	TaskBarIcon *TBIcon = new TaskBarIcon(main);
+	TaskBarIcon *TBIcon = new TaskBarIcon(main,config);
 	
 	if (TBIcon)
+	{
 		main->AttachTaskBarIcon(TBIcon);
+	}
 
 	if (manager)
 	{
@@ -100,4 +137,11 @@ bool MyApp::OnInit()
 		exit(1);
 
 	return true;
+}
+
+
+int MyApp::OnExit()
+{
+	delete checker;
+	return 0;
 }
