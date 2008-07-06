@@ -15,6 +15,7 @@
 #include "Parser.h"
 #include "Config.h"
 #include "LanguageManager.h"
+#include "ArgumentParser.h"
 
 class MyApp : public wxApp
 {
@@ -53,6 +54,7 @@ BEGIN_SETUP_LOC
 	ADD_CAPTION("Downloaded","Downloaded")
 	ADD_CAPTION("Status","Status")
 	ADD_CAPTION("Speed","Speed")
+	ADD_CAPTION("TimeRemaining","Time remaining")
 END_SETUP_LOC
 
 //SETLANGUAGE("English");
@@ -62,6 +64,17 @@ bool MyApp::OnInit()
 	//wxImage::AddHandler(new wxPNGHandler);
 
 	//wxInitializer initializer;
+
+	ArgumentParser *ArgParser = new ArgumentParser();
+	ArgParser->Init();
+
+	wxString Args;
+	for (int i=1;i<argc;i++)
+	{
+		//Args+="\"";
+		Args+=argv[i];
+		Args+="\r";
+	}
 
 	const wxString name = wxString::Format("DLFM-%s", wxGetUserId().c_str());
 
@@ -74,13 +87,6 @@ bool MyApp::OnInit()
 
 			//wxWindow::MSWProcessMessage();
 			//
-			wxString Args;
-			for (int i=1;i<argc;i++)
-			{
-				Args+="\"";
-				Args+=argv[i];
-				Args+="\" ";
-			}
 
 			COPYDATASTRUCT data;
 			data.dwData = 100;
@@ -136,6 +142,15 @@ bool MyApp::OnInit()
 	}else
 		exit(1);
 
+	//ArgumentParser *ArgParser = new ArgumentParser(Args);
+	//ArgParser->AttachManager(manager);
+	ArgParser->AttachManager(manager);
+	//AttachManager(manager);
+	manager->Stack.Add(Args);
+	//ArgParser->Parse();
+	ArgParser->Parse();
+	delete ArgParser;
+	//delete ArgParser;
 	return true;
 }
 

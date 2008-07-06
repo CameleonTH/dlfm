@@ -24,7 +24,7 @@ public:
 	void StartDownload(wxString link);
 	void StartDownload(FileDownloader *dl,bool ResetRetyCount=false,bool force=false);
 	void StopDownload(wxString link,bool update=true);
-	void DeleteDownload(wxString link);
+	void DeleteDownload(wxString link,bool update=true);
 
 	void LoadDownloads();
 	void SaveDownloads();
@@ -39,6 +39,8 @@ public:
 	int MaxRetry;
 	int RetryTime;
 	int MaxDL;
+	
+	wxArrayString Stack;
 
 	enum
 	{

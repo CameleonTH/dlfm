@@ -23,6 +23,7 @@ OK	Reprise d'un téléhargement en attente lorsqu'un téléchargement est finie
 OK	Gestion des reprise automatique en cas d'erreurs
 
 0.4
+	BUG : Taille Max 2Go
 	BUG : Crash lors de l'arret d'un téléchargement
 OK	BUG : Lors d'un retry d'un téléchargement, le téléchargement suivant se met route quand il est en wait.
 OK	BUG : Lors de l'arret multiple de plusieurs téléchargement, seul le premier est mis en pause
@@ -30,13 +31,11 @@ MC	FIX : Nouveau dispositif de Dl.free.fr
 OK	Icones pour le status des téléchargements
 OK	Gestion plusieurs langues
 	Gestion automatique des copier coller pour ajouter automatiquement les DL
-	Un seul instanciation du programme
-	Gestion d'ajout d'un lien en passant le lien en argument
-	Amélioration systéme de fichiers des téléchargements
+OK	Un seul instanciation du programme
+OK	Gestion d'ajout d'un lien en passant le lien en argument
 	Déplacement des téléchargements
-	Temps de téléchargement et estimation du temps restant
-	Gestion des priorités des téléchargements
-	Mise en priorité basse des téléchargement qui n'ont pas était télécharger
+	Temps de téléchargement
+EC	Estimation du temps restant
 
 0.5
 	Mise en place du message d'erreur lorsque l'ajout d'un téléchargement est un échéc
@@ -45,6 +44,11 @@ EC	Etat d'un téléchargement dans un onglet (pourcentage, erreur, status,blocks d
 	Clic droit sur download
 	Otimisation des blocks de progression
 	Vérification des téléchargement par MD5 (Optionnel)
+	Gestion des priorités des téléchargements
+	Mise en priorité basse des téléchargement qui n'ont pas était télécharger
+	Gestion ajout download multiple
+	Amélioration systéme de fichiers des téléchargements
+
 
 0.6
 	About
@@ -63,3 +67,4 @@ EC	Status Bar
 	
 0.8
 	Découapge des DL en plusieurs fichiers
+	Systéme de plugins

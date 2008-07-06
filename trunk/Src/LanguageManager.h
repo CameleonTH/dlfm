@@ -25,6 +25,7 @@
 #define DOWNLOADED GETLOCALISATION("Downloaded")
 #define STATUS GETLOCALISATION("Status")
 #define SPEED GETLOCALISATION("Speed")
+#define TIMEREMAINING GETLOCALISATION("TimeRemaining")
 #define DOWNLOADSLIST GETLOCALISATION("DownloadsList")
 
 class LanguageManager

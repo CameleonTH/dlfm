@@ -14,7 +14,7 @@ bool Parser::IsValidLink(wxString link)
 	if (!strncmp(link.c_str(),"http://",7))
 		return true;
 	else if (!strncmp(link.c_str(),"ftp://",6))
-		return true;
+		return false;
 	else
 		return false;
 }
