@@ -14,6 +14,7 @@ public:
 
 	void OnText(wxCommandEvent& event);
 
+	void SetLink(wxString URL);
 	wxString GetLink();
 	wxString GetFilename();
 	

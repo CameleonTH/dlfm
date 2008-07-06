@@ -1,0 +1,14 @@
+AddDownload=Nouveau téléchargement
+StartDownload=Commencer le téléchargement
+StopDownload=Arrétéer le téléchargement
+DeleteDownload=Supprimer
+DownloadsList=Liste de téléchargement
+NewDownload=Nouveau Téléchargement
+Cancel=Annuler
+TotalSpeed=Vitesse totale
+Filename=Nom du fichier
+Size=Taille
+Downloaded=Téléchargé
+Status=Status
+Speed=Vitesse
+TimeRemaining=Temps restant

@@ -285,7 +285,7 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 		{
 			pFFD->bStartDL=true;
 			// On récupére la taille du fichier finale
-			long size = Parser::GetFileSizeHTTP(pFFD->pHeader);
+			long Size = Parser::GetFileSizeHTTP(pFFD->pHeader);
 
 			/*double size2;
 			double size3;
@@ -298,7 +298,7 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 
 			//wxLogMessage("Size: %d",size);
 			if (pFFD->iDataPos>0)
-				if (size!=pFFD->iFileSize)
+				if (Size!=pFFD->iFileSize)
 				{
 					if (pFFD->RetryCount<pFFD->Manager->MaxRetry)
 						pFFD->Status=FFD_RETRY;
@@ -311,10 +311,10 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 
 			pFFD->iTime=GetTickCount();
 
-			if (size<=0)
+			if (Size<=0)
 				pFFD->iFileSize=-1;
 			else
-				pFFD->iFileSize=size/*+pFFD->iDataPos*/;
+				pFFD->iFileSize=Size/*+pFFD->iDataPos*/;
 		}
 		fseek(pFFD->pOutput,pFFD->iDataPos,SEEK_SET);
 		int len = fwrite(buffer,size,nmemb,pFFD->pOutput);

@@ -116,3 +116,10 @@ void DialogNewDL::OnText(wxCommandEvent& event)
 		}
 	}
 }
+
+void DialogNewDL::SetLink(wxString URL)
+{
+	Link = URL;
+	mLink->SetValue(URL);
+	mFilename->SetValue(Parser::GetFilenameFromURL((char*)Link.c_str()));
+}

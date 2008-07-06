@@ -238,7 +238,7 @@ void DLManager::UpdateOnce(FileDownloader *dl,bool grey)
 		if (item==-1)
 		{
 			item = mMain->GetListCtrl()->InsertItem(0,tmp->GetFilename());
-			wxLogMessage("Insert Item");
+			//wxLogDebug("Insert Item");
 		}
 
 
@@ -297,7 +297,27 @@ void DLManager::UpdateOnce(FileDownloader *dl,bool grey)
 		text.Printf("%.1f Kb/s",tmp->GetMoySpeed()/1000);
 		mMain->GetListCtrl()->SetItem(item,5,text);
 
-		mMain->GetListCtrl()->SetItem(item,6,tmp->GetLink());
+		if (tmp->GetFileSize()>0
+			&& tmp->GetMoySpeed()>0)
+		{
+			long TimeRemaining = (tmp->GetFileSize()-tmp->GetDownloadedSize())/tmp->GetMoySpeed();
+
+			float TempTime=TimeRemaining/3600;
+			long Hours = TempTime;
+			if (TempTime-Hours>0)
+				Hours--;
+
+			long Minutes=0;
+			long Seconds=0;
+
+
+			text.Printf("%d:%2d:%2d",Hours,Minutes,Seconds);
+		}else
+			text.Printf("??:??:??");
+
+		mMain->GetListCtrl()->SetItem(item,6,text);
+
+		mMain->GetListCtrl()->SetItem(item,7,tmp->GetLink());
 
 		mMain->GetListCtrl()->SetItemBackgroundColour(item,grey==true ? wxColor(224,224,224) : wxColor(255,255,255));
 
@@ -520,7 +540,7 @@ void DLManager::StopDownload(wxString link,bool update)
 	}
 }
 
-void DLManager::DeleteDownload(wxString link)
+void DLManager::DeleteDownload(wxString link,bool update)
 {
 	FileDownloader *temp;
 	bool Found=false;
@@ -549,7 +569,8 @@ void DLManager::DeleteDownload(wxString link)
 				}
 				/*temp->pMutex->Unlock();*/
 				delete temp;
-				UpdateScreen(true);
+				if (update)
+					UpdateScreen(true);
 			}
 			
 		}

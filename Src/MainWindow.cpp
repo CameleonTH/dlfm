@@ -3,6 +3,7 @@
 //#include "wx/generic/dirctrlg.h"
 #include "../lib/wxvcl/inifiles.h"
 #include "FileDownloader.h"
+#include "ArgumentParser.h"
 
 //BEGIN_DECLARE_EVENT_TYPES()
 	//DECLARE_EVENT_TYPE(wxEVT_COPYDATA,WM_COPYDATA)
@@ -145,8 +146,10 @@ MainWindow::MainWindow(wxFrame *frame,Config *config/*, const wxString& title, i
 		mList->SetColumnWidth(4,mConfig->ReadIntValue("ColumnStatusWidth",150));
 		mList->InsertColumn(5,SPEED);
 		mList->SetColumnWidth(5,mConfig->ReadIntValue("ColumnSpeedWidth",75));
-		mList->InsertColumn(6,wxString("URL"));
-		mList->SetColumnWidth(6,mConfig->ReadIntValue("ColumnURLWidth",200));
+		mList->InsertColumn(6,TIMEREMAINING);
+		mList->SetColumnWidth(6,mConfig->ReadIntValue("ColumnTimeRemaining",90));
+		mList->InsertColumn(7,wxString("URL"));
+		mList->SetColumnWidth(7,mConfig->ReadIntValue("ColumnURLWidth",200));
 
 		wxImageList *imagelist = new wxImageList(16,16,true);
 		imagelist->Add(wxBitmap("IDB_STARTED"));
@@ -224,9 +227,13 @@ void MainWindow::ShowLog(bool show)
 		LogWin->Hide();
 }
 
-void MainWindow::AddDownload()
+void MainWindow::AddDownload(wxString URL)
 {
 	DialogNewDL *dlg = new DialogNewDL(this);
+
+	if (URL!="")
+		dlg->SetLink(URL);
+
 	if (dlg->ShowModal()==0)
 	{
 		if (mDLManager->AddDownload(dlg->GetLink(),dlg->GetFilename())==false)
@@ -266,20 +273,16 @@ void MainWindow::StopDownload()
 
 void MainWindow::DeleteDownload()
 {
-	long selected = -1;
-	for (int long i=0;i<mList->GetItemCount();i++)
+
+	for (int long i=mList->GetItemCount()-1;i>=0;i--)
 	{
 		if (mList->GetItemState(i,wxLIST_STATE_SELECTED))
 		{
-			selected=i;
-			break;
+			wxLogMessage("%d %s",i,mList->GetItemText(i));
+			mDLManager->DeleteDownload(mList->GetItemText(i),false);
 		}
 	}
-	if (selected!=-1)
-	{
-		wxLogDebug(mList->GetItemText(selected));
-		mDLManager->DeleteDownload(mList->GetItemText(selected));
-	}
+	mDLManager->UpdateScreen(true);
 }
 
 void MainWindow::OnLeftClick(wxCommandEvent& event)
@@ -338,7 +341,8 @@ void MainWindow::OnClose(wxCloseEvent &event)
 	mConfig->WriteIntValue("ColumnPercentageWidth",mList->GetColumnWidth(3));
 	mConfig->WriteIntValue("ColumnStatusWidth",mList->GetColumnWidth(4));
 	mConfig->WriteIntValue("ColumnSpeedWidth",mList->GetColumnWidth(5));
-	mConfig->WriteIntValue("ColumnURLWidth",mList->GetColumnWidth(6));
+	mConfig->WriteIntValue("ColumnTimeRemaining",mList->GetColumnWidth(6));
+	mConfig->WriteIntValue("ColumnURLWidth",mList->GetColumnWidth(7));
 
 	mConfig->WriteIntValue("Width",GetSize().x);
 	mConfig->WriteIntValue("Height",GetSize().y);
@@ -368,6 +372,17 @@ WXLRESULT MainWindow::MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lPara
 	{
 		COPYDATASTRUCT *data = (COPYDATASTRUCT*)lParam;
 		wxLogMessage("Copy Data %s",data->lpData);
+		//ArgumentParser *ArgParser = new ArgumentParser((char*)data->lpData);
+		ArgumentParser *ArgParser = new ArgumentParser();
+		ArgParser->AttachManager(mDLManager);
+		//ArgumentParser::AttachManager(mDLManager);
+		//while(Stack.Count()!=0);
+		
+		mDLManager->Stack.Add((char*)data->lpData);
+	
+		ArgParser->Parse();
+		//ArgumentParser::Parse();
+		//delete ArgParser;
 		//return true;
 	}
 

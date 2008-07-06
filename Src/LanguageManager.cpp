@@ -48,11 +48,7 @@ bool LanguageManager::LoadLanguage(wxString Language)
 			if (Values[i])
 				Values[i]->Value = config->ReadStringValue(Values[i]->Name,Values[i]->Value,false);
 		}
-		/*Values.Add(new ValueSlot("AddDownload",config->ReadStringValue("AddDownload","Start Download",false)));
-		Values.Add(new ValueSlot("StartDownload",config->ReadStringValue("StartDownload","Start Download",false)));
-		Values.Add(new ValueSlot("StopDownload",config->ReadStringValue("StopDownload","Stop Download",false)));
-		Values.Add(new ValueSlot("DeleteDownload",config->ReadStringValue("DeleteDownload","Stop Download",false)));*/
-
+		
 		if (config->ExistFile())
 			return true;
 	}
@@ -65,7 +61,7 @@ wxString LanguageManager::GetValue(wxString Name)
 {
 	//Values.
 	//wxArrayString Values;
-	
+
 	for (int i=0;i<Values.Count();i++)
 	{
 		if (Values[i]->Name == Name)

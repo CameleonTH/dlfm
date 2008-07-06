@@ -32,7 +32,7 @@ public:
 	inline wxListCtrl *GetListCtrl() { return mList; }
 	inline wxFlatNotebook *GetNotebook() { return book; }
 
-	void AddDownload();
+	void AddDownload(wxString URL="");
 	void StartDownload();
 	void StopDownload();
 	void DeleteDownload();

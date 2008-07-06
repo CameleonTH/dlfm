@@ -8,12 +8,22 @@
 class ArgumentParser
 {
 public:
-	ArgumentParser(wxString Arguments);
+	//ArgumentParser(wxString arguments);
 
 	void AttachManager(DLManager *manager);
 
-private:
-	DLManager *Manager;
+	void Parse();
+	void Init();
+
+	
+//private:
+protected:
+	//static bool AlreadyRun;
+	//static DLManager *Manager;
+	//wxString Arguments;
 };
+
+//extern bool AlreadyRun;
+//extern DLManager *Manager;
 
 #endif
