@@ -285,7 +285,7 @@ size_t FileDownloader::WriteData(void *buffer, size_t size, size_t nmemb, void *
 		{
 			pFFD->bStartDL=true;
 			// On récupére la taille du fichier finale
-			long Size = Parser::GetFileSizeHTTP(pFFD->pHeader);
+			curl_off_t Size = Parser::GetFileSizeHTTP(pFFD->pHeader);
 
 			/*double size2;
 			double size3;

@@ -26,15 +26,15 @@ bool Parser::IsFreeLink(wxString link)
 	return false;
 }
 
-long Parser::GetFileSizeHTTP(wxString header)
+curl_off_t Parser::GetFileSizeHTTP(wxString header)
 {
 	// On récupére la taille du fichier finale
 
 	std::string temp((char*)header.c_str());
 
-	int pos = temp.rfind("Content-Range:");
-	int max = pos;
-	int min = pos;
+	long pos = temp.rfind("Content-Range:");
+	long max = pos;
+	long min = pos;
 
 	if (pos==-1)
 		return -1;
@@ -52,7 +52,12 @@ long Parser::GetFileSizeHTTP(wxString header)
 	if (max-min<=0)
 		return -1;
 
-	long iFileSize=atoi(temp.substr(min,max-min).c_str());
+	//wxLogMessage("FileSize %s",temp.substr(min,max-min).c_str());
+
+	//curl_off_t iFileSize=atol(temp.substr(min,max-min).c_str());
+	curl_off_t iFileSize=_atoi64(temp.substr(min,max-min).c_str()); // _strtoi64
+	
+	//wxLogMessage("FileSize %I64d",iFileSize);
 
 	return iFileSize;
 }
@@ -60,7 +65,7 @@ long Parser::GetFileSizeHTTP(wxString header)
 wxString Parser::GetFilenameFromURL(wxString url)
 {
 	std::string temp((char*)url.c_str());
-	int min,max,pos;
+	long min,max,pos;
 	min=0;	
 
 	max=temp.length();

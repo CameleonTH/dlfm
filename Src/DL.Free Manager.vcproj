@@ -41,7 +41,7 @@
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				AdditionalIncludeDirectories="&quot;..\lib\curl-7.18.1\include&quot;;&quot;..\lib\wxWidgets-2.8.7\include\&quot;;&quot;..\lib\wxWidgets-2.8.7\lib\vc_lib\mswd\&quot;;..\lib\wxflatnotebook\include\"
-				PreprocessorDefinitions="CURL_STATICLIB;WIN32;__WXMSW__;_WINDOWS;_DEBUG;__WXDEBUG__;NOPCH;DEBUG"
+				PreprocessorDefinitions="CURL_STATICLIB;CURL_FORMAT_OFF_T;WIN32;__WXMSW__;_WINDOWS;_DEBUG;__WXDEBUG__;NOPCH;DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
