@@ -39,8 +39,8 @@ public:
 	virtual void StartDownload();	// Commence ou reprend le téléchargement
 	virtual void StopDownload();	// Stop (met en pause) le téléchargement
 
-	virtual long GetFileSize() { return iFileSize;}
-	virtual long GetDownloadedSize() { return iDataPos;}
+	virtual curl_off_t GetFileSize() { return iFileSize;}
+	virtual curl_off_t GetDownloadedSize() { return iDataPos;}
 	inline wxString GetFilename() { /*pMutex->Lock()*/;wxString tem = pFileName;/*pMutex->Unlock()*/;return tem; }
 	inline wxString GetLink() { /*pMutex->Lock();*/wxString tem = pLink;/*pMutex->Unlock();*/return tem; }
 	virtual float GetSpeed() { return fSpeed; }
@@ -88,8 +88,9 @@ protected:
 	FILE		*pOutput;			// Fichier de sortie
 	CURL		*pCurl;				// Connection
 
-	long		iFileSize;			// Taille du fichier à télécharger
-	long		iDataPos;			// Taille des données télécharger
+	//long long = __int64
+	curl_off_t	iFileSize;			// Taille du fichier à télécharger
+	curl_off_t	iDataPos;			// Taille des données télécharger
 	//long iMaxSpeed;				// Vitesse max pour télécharger ce fichier
 
 	Page		pStatePage;
@@ -105,7 +106,7 @@ protected:
 	bool		bStartDL;
 
 	long		iTime;
-	long		iByteDL;
+	curl_off_t	iByteDL;
 	float		fSpeed;
 	float		fMoySpeed;
 

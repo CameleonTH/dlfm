@@ -247,18 +247,18 @@ void DLManager::UpdateOnce(FileDownloader *dl,bool grey)
 		else if (tmp->GetFileSize()==-1)
 			text.Printf("??");
 		else
-			text.Printf("%d",tmp->GetFileSize());
+			text.Printf("%I64d",tmp->GetFileSize());
 		mMain->GetListCtrl()->SetItem(item,1,text);
 		if (tmp->GetDownloadedSize()==0)
 			text.Printf("");
 		else
-			text.Printf("%d",tmp->GetDownloadedSize());
+			text.Printf("%I64d",tmp->GetDownloadedSize());
 		mMain->GetListCtrl()->SetItem(item,2,text);
 		//tmp->GetFileSize()/tmp->GetDownloadedSize();
 		if (tmp->GetFileSize()==-1 || tmp->GetFileSize()==-2)
 			text.Printf("");
 		else
-			text.Printf("%.2f",(float)tmp->GetDownloadedSize()/tmp->GetFileSize()*100);
+			text.Printf("%.2f",((float)tmp->GetDownloadedSize()/tmp->GetFileSize())*100);
 			
 		mMain->GetListCtrl()->SetItem(item,3,text);
 
@@ -593,7 +593,7 @@ void DLManager::LoadDownloads()
 		fread(&Count,sizeof(long),1,file);
 		wxString text;
 
-		long Size;
+		curl_off_t Size;
 
 		char buffer[256*256];
 		FileDownloader *temp=NULL;
@@ -624,10 +624,10 @@ void DLManager::LoadDownloads()
 			text.append(buffer,Size);
 			temp->SetFilename(text);
 
-			fread(&Size,sizeof(long),1,file);
+			fread(&Size,sizeof(curl_off_t),1,file);
 			temp->SetFileSize(Size);
 			
-			fread(&Size,sizeof(long),1,file);
+			fread(&Size,sizeof(curl_off_t),1,file);
 			temp->SetDownloadedSize(Size);
 
 			if (temp->GetFileSize()==temp->GetDownloadedSize())
@@ -647,7 +647,7 @@ void DLManager::SaveDownloads()
 		long Count = List.Count();
 		fwrite(&Count,sizeof(long),1,file);
 
-		long Size;
+		curl_off_t Size;
 		FileDownloader *temp;
 		for (int i=0;i<List.Count();i++)
 		{
@@ -673,9 +673,9 @@ void DLManager::SaveDownloads()
 			fwrite(temp->GetFilename().c_str(),sizeof(char),temp->GetFilename().length(),file);
 
 			Size = temp->GetFileSize();
-			fwrite(&Size,sizeof(long),1,file);
+			fwrite(&Size,sizeof(curl_off_t),1,file);
 			Size = temp->GetDownloadedSize();
-			fwrite(&Size,sizeof(long),1,file);
+			fwrite(&Size,sizeof(curl_off_t),1,file);
 		}
 		fclose(file);
 	}
